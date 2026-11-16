@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&display=swap');
 @import 'tailwindcss';
 
 @theme {
@@ -47,17 +48,16 @@
 	--color-status-new-order: #b8493f;
 	--color-status-preparing: #e9b82f;
 	--color-status-ready: #84916a;
+
+	/* ========================================
+     FONTS
+  ======================================== */
+	--font-archivo: 'Archivo', sans-serif;
 }
 
 /* ========================================
    GLOBAL RESET
 ======================================== */
-
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
 
 body {
 	background-color: var(--color-bg-page);
