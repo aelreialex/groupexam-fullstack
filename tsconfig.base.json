@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"target": "es2025",
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"strict": true,
+		"skipLibCheck": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true
+	}
+}
