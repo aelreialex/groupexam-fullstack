@@ -1,0 +1,6 @@
+{
+  "name": "@app/staff-orders-page",
+  "private": true,
+  "type": "module",
+  "exports": "./index.ts"
+}
