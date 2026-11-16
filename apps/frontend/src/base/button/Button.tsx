@@ -30,8 +30,9 @@ export function Button({
                 focus-visible:outline-offset-4
                 focus-visible:outline-border-strong
                 enabled:active:shadow-none
-                disabled:opacity-[0.28] disabled:shadow-none
+                disabled:opacity-[0.28] disabled:shadow-none disabled:cursor-not-allowed
                 font-archivo
+                cursor-pointer
                 ${variantClasses[variant]} 
                 ${className ?? ''}
                 `}
