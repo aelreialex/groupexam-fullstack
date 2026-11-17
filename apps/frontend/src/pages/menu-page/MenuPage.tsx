@@ -1,7 +1,9 @@
-type ExampleComponentProps = {
-  // Add props here
-};
+import { ProductCard } from '@app/product-card';
 
-export function MenuPage({}: ExampleComponentProps) {
-  return <div>MenuPage</div>;
+export function MenuPage() {
+	return (
+		<div>
+			<ProductCard />
+		</div>
+	);
 }

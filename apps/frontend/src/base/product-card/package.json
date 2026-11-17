@@ -1,0 +1,6 @@
+{
+	"name": "@app/product-card",
+	"private": true,
+	"type": "module",
+	"exports": "./index.ts"
+}
