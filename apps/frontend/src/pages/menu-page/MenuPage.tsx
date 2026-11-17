@@ -54,6 +54,31 @@ export function MenuPage() {
 				imageSrc={korvImage}
 				imageAlt='Grillad korv med bröd'
 			/>
+			<ProductCard
+				product={exampleProduct}
+				imageSrc={korvImage}
+				imageAlt='Grillad korv med bröd'
+			/>
+			<ProductCard
+				product={exampleProduct}
+				imageSrc={korvImage}
+				imageAlt='Grillad korv med bröd'
+			/>
+			<ProductCard
+				product={exampleProduct}
+				imageSrc={korvImage}
+				imageAlt='Grillad korv med bröd'
+			/>
+			<ProductCard
+				product={exampleProduct}
+				imageSrc={korvImage}
+				imageAlt='Grillad korv med bröd'
+			/>
+			<ProductCard
+				product={exampleProduct}
+				imageSrc={korvImage}
+				imageAlt='Grillad korv med bröd'
+			/>
 		</div>
 	);
 }

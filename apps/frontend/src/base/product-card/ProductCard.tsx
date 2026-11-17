@@ -76,7 +76,7 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 					<p className='font-kalam text-sm'>Nisse: "{nisseQuote}"</p>
 				)}
 
-				<div className='border-y-border-dashed-border-border-subtle'>
+				<div className='border-y border-dashed border-border-subtle'>
 					<button
 						type='button'
 						aria-expanded={isExpanded}
