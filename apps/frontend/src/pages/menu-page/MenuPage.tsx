@@ -30,6 +30,13 @@ const exampleProduct = createProductSchema.parse({
 			price: 5,
 			isCustomizable: true,
 		},
+		{
+			_id: 'extra-salad',
+			name: 'Extra räksallad',
+			role: 'topping',
+			price: 10,
+			isCustomizable: true,
+		},
 	],
 });
 
