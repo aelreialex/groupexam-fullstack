@@ -1,8 +1,8 @@
 import { model, Schema, Types } from "mongoose";
-import { PRODUCT_CATEGORIES, type IProduct } from "@app/shared";
+import { PRODUCT_CATEGORIES, type Product } from "@app/shared";
 
 type MongooseIProduct = Omit<
-	IProduct,
+	Product,
 	"_id" | "ingredients" | "extras" | "condiments"
 > & {
 	ingredients: Types.ObjectId[];

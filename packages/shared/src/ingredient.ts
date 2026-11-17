@@ -10,9 +10,9 @@ export const INGREDIENT_ROLES = [
 export const INGREDIENT_ALLERGENS = ["gluten", "lactose", "egg"] as const;
 
 export const ingredientRoleSchema = z.enum(INGREDIENT_ROLES);
-export type IIngredientRole = z.infer<typeof ingredientRoleSchema>;
+export type IngredientRole = z.infer<typeof ingredientRoleSchema>;
 export const ingredientAllergensSchema = z.enum(INGREDIENT_ALLERGENS);
-export type IIngredientAllergens = z.infer<typeof ingredientAllergensSchema>;
+export type IngredientAllergens = z.infer<typeof ingredientAllergensSchema>;
 
 export const createIngredientSchema = z.object({
 	_id: z.string(),
@@ -24,4 +24,4 @@ export const createIngredientSchema = z.object({
 	inStock: z.boolean().default(true),
 });
 
-export type IIngredient = z.infer<typeof createIngredientSchema>;
+export type Ingredient = z.infer<typeof createIngredientSchema>;

@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
+import menuRouter from "./routes/menu.route"
 
 // config
 
@@ -32,6 +33,8 @@ app.use(
 app.use(cookieParser());
 
 //routes
+
+app.use("/api/menu", menuRouter);
 
 // database connection and port
 database.on("error", (error) => console.log(error));
