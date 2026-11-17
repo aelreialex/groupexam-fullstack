@@ -7,7 +7,9 @@
 		"dev": "tsx watch src/index.ts",
 		"typecheck": "tsc --noEmit",
 		"seedIngredients": "tsx src/scripts/ingredientSeedingScript.ts",
-		"seedProducts": "tsx src/scripts/productSeedingScript.ts"
+		"seedProducts": "tsx src/scripts/productSeedingScript.ts",
+		"fetchProducts": "tsx src/scripts/fetchPopulatedProducts.ts",
+		"fetchIngredients": "tsx src/scripts/fetchIngredientsScript.ts"
 	},
 	"dependencies": {
 		"@app/shared": "*",
