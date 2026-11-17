@@ -12,7 +12,15 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 	const { name, price, description, nisseQuote } = product;
 	const [isExpanded, setIsExpanded] = useState(false);
 	const extrasId = useId();
-	const [hasExtraOnion, setHasExtraOnion] = useState(false);
+	const [selectedExtraIds, setSelectedExtraIds] = useState<string[]>([]);
+
+	function toggleExtra(extraId: string) {
+		setSelectedExtraIds((currentIds) =>
+			currentIds.includes(extraId)
+				? currentIds.filter((id) => id !== extraId)
+				: [...currentIds, extraId],
+		);
+	}
 
 	return (
 		<article
@@ -68,53 +76,42 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 					<p className='font-kalam text-sm'>Nisse: "{nisseQuote}"</p>
 				)}
 
-				<div
-					className='
-				border-y
-				border-dashed
-				border-border-subtle'>
+				<div className='border-y-border-dashed-border-border-subtle'>
 					<button
 						type='button'
 						aria-expanded={isExpanded}
 						aria-controls={extrasId}
-						onClick={() => setIsExpanded(!isExpanded)}
+						onClick={() => setIsExpanded((current) => !current)}
 						className='
-					flex
-					w-full
-					cursor-pointer
-					items-center
-					justify-between
-					gap-4
-					py-3
-					text-left
-					text-sm
-					font-bold
-					focus-visible:outline-2
-					focus-visible:outline-offset-2
-					focus-visible:outline-border-strong'>
+						flex w-full
+						cursor-pointer
+						items-center justify-between
+						gap-4 py-3
+						text-left text-sm font-bold
+						focus-visible:outline-2
+						focus-visible:outline-offset-2
+						focus-visible:outline-border-strong'>
 						<span>Välj tillbehör</span>
 						<span aria-hidden='true'>{isExpanded ? '-' : '+'}</span>
 					</button>
 
-					<div id={extrasId} hidden={!isExpanded} className='pb-3'>
-						<label
-							className='
-						flex
-						cursor-pointer
-						items-center
-						gap-2
-						py-2
-						text-sm'>
-							<input
-								type='checkbox'
-								checked={hasExtraOnion}
-								onChange={(event) => setHasExtraOnion(event.target.checked)}
-								className='size-4 accent-brand-primary'
-							/>
+					<div id={extrasId} hidden={!isExpanded} className='space-y-2 pb-3'>
+						{product.extras.map((extra) => (
+							<label
+								key={extra._id}
+								className='flex items-center gap-2 text-sm'>
+								<input
+									type='checkbox'
+									checked={selectedExtraIds.includes(extra._id)}
+									onChange={() => toggleExtra(extra._id)}
+									disabled={!extra.inStock}
+									className='size-4 accent-brand-primary'
+								/>
 
-							<span className='flex-1'>Extra rostad lök</span>
-							<span>+5 kr</span>
-						</label>
+								<span className='flex-1'>{extra.name}</span>
+								<span>{extra.inStock ? `+${extra.price} kr` : 'Slut'}</span>
+							</label>
+						))}
 					</div>
 				</div>
 				<Button>Lägg till</Button>
