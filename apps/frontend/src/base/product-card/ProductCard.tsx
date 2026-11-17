@@ -16,8 +16,22 @@ export function ProductCard({
 	imageAlt,
 }: ProductCardProps) {
 	return (
-		<article>
-			<img src={imageSrc} alt={imageAlt} />
+		<article
+			className='
+			overflow-hidden
+			rounded-sm
+			border
+			shadow-sm
+			'>
+			<img
+				src={imageSrc}
+				alt={imageAlt}
+				className='
+			aspect-4/3
+			w-full
+			object-cover
+			'
+			/>
 			<h2>{name}</h2>
 			<p>{price} kr</p>
 			<p>{description}</p>
