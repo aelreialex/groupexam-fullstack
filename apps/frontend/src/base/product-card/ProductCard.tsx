@@ -1,25 +1,18 @@
+import type { IProduct } from '@app/shared';
 import { Button } from '@app/button';
 import { useId, useState } from 'react';
 
 type ProductCardProps = {
-	name: string;
-	price: number;
-	description: string;
-	comment?: string;
+	product: IProduct;
 	imageSrc: string;
 	imageAlt: string;
 };
 
-export function ProductCard({
-	name,
-	price,
-	description,
-	comment,
-	imageSrc,
-	imageAlt,
-}: ProductCardProps) {
+export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
+	const { name, price, description, nisseQuote } = product;
 	const [isExpanded, setIsExpanded] = useState(false);
 	const extrasId = useId();
+	const [hasExtraOnion, setHasExtraOnion] = useState(false);
 
 	return (
 		<article
@@ -71,7 +64,9 @@ export function ProductCard({
 				leading-relaxed'>
 					{description}
 				</p>
-				{comment && <p className='font-kalam text-sm'>Nisse: "{comment}"</p>}
+				{nisseQuote && (
+					<p className='font-kalam text-sm'>Nisse: "{nisseQuote}"</p>
+				)}
 
 				<div
 					className='
@@ -102,7 +97,24 @@ export function ProductCard({
 					</button>
 
 					<div id={extrasId} hidden={!isExpanded} className='pb-3'>
-						Här kommer tillbehören.
+						<label
+							className='
+						flex
+						cursor-pointer
+						items-center
+						gap-2
+						py-2
+						text-sm'>
+							<input
+								type='checkbox'
+								checked={hasExtraOnion}
+								onChange={(event) => setHasExtraOnion(event.target.checked)}
+								className='size-4 accent-brand-primary'
+							/>
+
+							<span className='flex-1'>Extra rostad lök</span>
+							<span>+5 kr</span>
+						</label>
 					</div>
 				</div>
 				<Button>Lägg till</Button>
