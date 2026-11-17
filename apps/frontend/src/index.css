@@ -1,100 +1,114 @@
-@import "tailwindcss";
-
-:root {
-  /* ========================================
-     BACKGROUNDS
-  ======================================== */
-  --color-bg-page: #eee0c4;
-  --color-bg-surface: #f7edd8;
-  --color-bg-surface-muted: #f4e9d1;
-  --color-bg-section-alternate: #dfca9f;
-  --color-bg-staff-workspace: #e4d4b6;
-  --color-bg-staff-header: #f1e4ca;
-  --color-bg-footer: #593522;
-
-  /* ========================================
-     BRAND
-  ======================================== */
-  --color-brand-primary: #a72c26;
-  --color-brand-secondary: #e9b82f;
-  --color-brand-rust: #8b4625;
-
-  /* ========================================
-     TEXT
-  ======================================== */
-  --color-text-primary: #382b22;
-  --color-text-secondary: #6f5c4c;
-  --color-text-on-dark: #f3e4c8;
-  --color-text-on-status: #fff8e9;
-
-  /* ========================================
-     BORDERS
-  ======================================== */
-  --color-border-strong: #382b22;
-  --color-border-subtle: rgb(56 43 34 / 45%);
-  --color-border-dark-rust: #4d2c1c;
-
-  /* ========================================
-     INTERACTIVE
-  ======================================== */
-  --color-interactive-primary: #e9b82f;
-  --color-interactive-hover: #e9b82f;
-  --color-interactive-disabled: rgb(56 43 34 / 28%);
-
-  /* ========================================
-     ORDER STATUS
-  ======================================== */
-  --color-status-new-order: #b8493f;
-  --color-status-preparing: #e9b82f;
-  --color-status-ready: #84916a;
-}
-
-/* ========================================
-   TAILWIND THEME
-======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&display=swap');
+@import 'tailwindcss';
 
 @theme {
-  --color-bg-page: var(--color-bg-page);
-  --color-bg-surface: var(--color-bg-surface);
-  --color-bg-surface-muted: var(--color-bg-surface-muted);
-  --color-bg-section-alternate: var(--color-bg-section-alternate);
-  --color-bg-staff-workspace: var(--color-bg-staff-workspace);
-  --color-bg-staff-header: var(--color-bg-staff-header);
-  --color-bg-footer: var(--color-bg-footer);
+	/* ========================================
+     BACKGROUNDS
+  ======================================== */
+	--color-bg-page: #eee0c4;
+	--color-bg-surface: #f7edd8;
+	--color-bg-surface-muted: #f4e9d1;
+	--color-bg-section-alternate: #dfca9f;
+	--color-bg-staff-workspace: #e4d4b6;
+	--color-bg-staff-header: #f1e4ca;
+	--color-bg-footer: #593522;
 
-  --color-brand-primary: var(--color-brand-primary);
-  --color-brand-secondary: var(--color-brand-secondary);
-  --color-brand-rust: var(--color-brand-rust);
+	/* ========================================
+     BRAND
+  ======================================== */
+	--color-brand-primary: #a72c26;
+	--color-brand-secondary: #e9b82f;
+	--color-brand-rust: #8b4625;
 
-  --color-text-primary: var(--color-text-primary);
-  --color-text-secondary: var(--color-text-secondary);
-  --color-text-on-dark: var(--color-text-on-dark);
-  --color-text-on-status: var(--color-text-on-status);
+	/* ========================================
+     TEXT
+  ======================================== */
+	--color-text-primary: #382b22;
+	--color-text-secondary: #6f5c4c;
+	--color-text-on-dark: #f3e4c8;
+	--color-text-on-status: #fff8e9;
 
-  --color-border-strong: var(--color-border-strong);
-  --color-border-subtle: var(--color-border-subtle);
-  --color-border-dark-rust: var(--color-border-dark-rust);
+	/* ========================================
+     BORDERS
+  ======================================== */
+	--color-border-strong: #382b22;
+	--color-border-subtle: rgb(56 43 34 / 45%);
+	--color-border-dark-rust: #4d2c1c;
 
-  --color-interactive-primary: var(--color-interactive-primary);
-  --color-interactive-hover: var(--color-interactive-hover);
-  --color-interactive-disabled: var(--color-interactive-disabled);
+	/* ========================================
+     INTERACTIVE
+  ======================================== */
+	--color-interactive-primary: #e9b82f;
+	--color-interactive-hover: #e9b82f;
+	--color-interactive-disabled: rgb(56 43 34 / 28%);
 
-  --color-status-new-order: var(--color-status-new-order);
-  --color-status-preparing: var(--color-status-preparing);
-  --color-status-ready: var(--color-status-ready);
+	/* ========================================
+     ORDER STATUS
+  ======================================== */
+	--color-status-new-order: #b8493f;
+	--color-status-preparing: #e9b82f;
+	--color-status-ready: #84916a;
+
+	/* ========================================
+     FONTS
+  ======================================== */
+	--font-archivo: 'Archivo', sans-serif;
 }
 
 /* ========================================
    GLOBAL RESET
 ======================================== */
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+body {
+	background-color: var(--color-bg-page);
+	color: var(--color-text-primary);
 }
 
-body {
-  background-color: var(--color-bg-page);
-  color: var(--color-text-primary);
+:root {
+	/* ========================================
+     BACKGROUNDS
+  ======================================== */
+	--color-bg-page: #eee0c4;
+	--color-bg-surface: #f7edd8;
+	--color-bg-surface-muted: #f4e9d1;
+	--color-bg-section-alternate: #dfca9f;
+	--color-bg-staff-workspace: #e4d4b6;
+	--color-bg-staff-header: #f1e4ca;
+	--color-bg-footer: #593522;
+
+	/* ========================================
+     BRAND
+  ======================================== */
+	--color-brand-primary: #a72c26;
+	--color-brand-secondary: #e9b82f;
+	--color-brand-rust: #8b4625;
+
+	/* ========================================
+     TEXT
+  ======================================== */
+	--color-text-primary: #382b22;
+	--color-text-secondary: #6f5c4c;
+	--color-text-on-dark: #f3e4c8;
+	--color-text-on-status: #fff8e9;
+
+	/* ========================================
+     BORDERS
+  ======================================== */
+	--color-border-strong: #382b22;
+	--color-border-subtle: rgb(56 43 34 / 45%);
+	--color-border-dark-rust: #4d2c1c;
+
+	/* ========================================
+     INTERACTIVE
+  ======================================== */
+	--color-interactive-primary: #e9b82f;
+	--color-interactive-hover: #e9b82f;
+	--color-interactive-disabled: rgb(56 43 34 / 28%);
+
+	/* ========================================
+     ORDER STATUS
+  ======================================== */
+	--color-status-new-order: #b8493f;
+	--color-status-preparing: #e9b82f;
+	--color-status-ready: #84916a;
 }
