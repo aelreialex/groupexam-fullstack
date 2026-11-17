@@ -1,12 +1,12 @@
 // apps/backend/src/seed.ts
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import { type IIngredient } from "@app/shared";
+import { type Ingredient } from "@app/shared";
 import IngredientModel from "../models/ingredient.model";
 
 dotenv.config();
 
-const ingredients: Omit<IIngredient, "_id">[] = [
+const ingredients: Omit<Ingredient, "_id">[] = [
 	// --- BASER (base) ---
 	{
 		name: "Korvbröd",
