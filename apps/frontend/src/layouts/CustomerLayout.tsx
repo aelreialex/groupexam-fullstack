@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "@app/header";
+import { Footer } from "@app/footer";
 
 function CustomerLayout() {
   return (
@@ -10,9 +11,7 @@ function CustomerLayout() {
         <Outlet />
       </main>
 
-      <footer>
-        <p>Customer footer</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

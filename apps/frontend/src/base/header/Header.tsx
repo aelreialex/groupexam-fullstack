@@ -1,24 +1,56 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/Logo.svg";
+import { Button } from "@app/button";
+import { ShoppingBag } from "lucide-react";
 
 export function Header() {
   return (
     <header className="w-full border-b border-border-strong">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 items-center gap-4 p-4 sm:grid-cols-3">
+      <div
+        className={`
+          mx-auto grid max-w-6xl grid-cols-2 items-center gap-4
+          px-4 py-2 sm:grid-cols-3
+        `}
+      >
         <img src={logo} alt="Nisses Korvmoj" className="w-32" />
 
         <div className="col-start-2 flex justify-end sm:col-start-3">
-          <button>Placeholder</button>
+          <Button
+            variant="primary"
+            aria-label="Öppna varukorg, 4 produkter"
+            onClick={() => console.log("Öppna varukorg")}
+          >
+            <ShoppingBag size={20} />
+            <span>4</span>
+          </Button>
         </div>
 
         <nav
-          className="
-            col-span-2 flex items-center gap-6 sm:col-span-1 
-            sm:col-start-2 sm:row-start-1 sm:justify-center
-          "
+          className={`
+            col-span-2 flex items-center gap-6
+            sm:col-span-1 sm:col-start-2 sm:row-start-1 sm:justify-center
+          `}
         >
-          <Link to="/menu">Meny</Link>
-          <Link to="/">Hem</Link>
+          <NavLink
+            to="/menu"
+            className={({ isActive }) => `
+              text-base font-semibold hover:border-b
+              ${isActive ? "border-b text-brand-primary" : ""}
+            `}
+          >
+            Meny
+          </NavLink>
+
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => `
+              text-base font-semibold hover:border-b
+              ${isActive ? "border-b text-brand-primary" : ""}
+            `}
+          >
+            Hem
+          </NavLink>
         </nav>
       </div>
     </header>
