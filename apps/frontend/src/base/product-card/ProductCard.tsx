@@ -1,9 +1,9 @@
-import type { IProduct } from '@app/shared';
+import type { Product } from '@app/shared';
 import { Button } from '@app/button';
 import { useId, useState } from 'react';
 
 type ProductCardProps = {
-	product: IProduct;
+	product: Product;
 	imageSrc: string;
 	imageAlt: string;
 };
