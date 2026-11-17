@@ -1,13 +1,20 @@
 //import { Button } from '@app/button';
 //import { ShoppingBag } from 'lucide-react';
+// import { Counter } from "@app/counter";
+// import { useState } from "react";
 
 type ExampleComponentProps = {
-	// Add props here
+  // Add props here
 };
 
 export function HomePage({}: ExampleComponentProps) {
-	return <div className='mb-6 flex-col gap-4'></div>;
+  return <div className="mb-6 flex-col gap-4">HomePage</div>;
 }
+
+/*
+const [value, setValue] = useState(0);
+<Counter value={value} onChange={setValue}></Counter>
+*/
 
 /*
 			<Button variant='primary' aria-label='Varukorg, 4 varor'>
