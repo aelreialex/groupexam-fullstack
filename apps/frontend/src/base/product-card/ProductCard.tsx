@@ -21,6 +21,10 @@ export function ProductCard({
 			overflow-hidden
 			rounded-sm
 			border
+			border-border-subtle
+			bg-bg-surface
+			font-archivo
+			text-text-primary
 			shadow-sm
 			'>
 			<img

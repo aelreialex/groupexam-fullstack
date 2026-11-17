@@ -5,9 +5,9 @@ import Product from "../models/product.model";
 
 dotenv.config();
 
-// Exakta ID:n från din ingredients-tabell i MongoDB
+// Exakta ID:n från din ingredients-tabell i MongoDB, grupperade efter role
 const ING = {
-	// Baser
+	// --- BASER (role: "base") -> ingredients ---
 	korvbrod: new Types.ObjectId("6afaf5766263f8da9d8010eb"),
 	briochebrod: new Types.ObjectId("6afaf5766263f8da9d8010ec"),
 	tunnbrod: new Types.ObjectId("6afaf5766263f8da9d8010ed"),
@@ -15,7 +15,7 @@ const ING = {
 	potatismos: new Types.ObjectId("6afaf5766263f8da9d8010ef"),
 	pommes: new Types.ObjectId("6afaf5766263f8da9d8010f0"),
 
-	// Korvar
+	// --- KORVAR (role: "sausage") -> ingredients ---
 	koktKorv: new Types.ObjectId("6afaf5766263f8da9d8010f1"),
 	grilladKorv: new Types.ObjectId("6afaf5766263f8da9d8010f2"),
 	chorizo: new Types.ObjectId("6afaf5766263f8da9d8010f3"),
@@ -23,17 +23,17 @@ const ING = {
 	bratwurst: new Types.ObjectId("6afaf5766263f8da9d8010f5"),
 	vegokorv: new Types.ObjectId("6afaf5766263f8da9d8010f6"),
 
-	// Condiments (såser & röror)
+	// --- SÅSER & DRESSINGAR (role: "condiment") -> condiments ---
 	ketchup: new Types.ObjectId("6afaf5766263f8da9d8010f7"),
 	senap: new Types.ObjectId("6afaf5766263f8da9d8010f8"),
 	starkSenap: new Types.ObjectId("6afaf5766263f8da9d8010f9"),
-	bostongurka: new Types.ObjectId("6afaf5766263f8da9d8010fa"),
-	raksallad: new Types.ObjectId("6afaf5766263f8da9d8010fb"),
-	vastkustsallad: new Types.ObjectId("6afaf5766263f8da9d8010fc"),
 	remouladsas: new Types.ObjectId("6afaf5766263f8da9d8010fd"),
 	vitloksdressing: new Types.ObjectId("6afaf5766263f8da9d8010fe"),
 
-	// Toppings (extras)
+	// --- TOPPINGS & RÖROR (role: "topping") -> extras ---
+	bostongurka: new Types.ObjectId("6afaf5766263f8da9d8010fa"),
+	raksallad: new Types.ObjectId("6afaf5766263f8da9d8010fb"),
+	vastkustsallad: new Types.ObjectId("6afaf5766263f8da9d8010fc"),
 	rostadLok: new Types.ObjectId("6afaf5766263f8da9d8010ff"),
 	raLok: new Types.ObjectId("6afaf5766263f8da9d801100"),
 	surkal: new Types.ObjectId("6afaf5766263f8da9d801101"),
@@ -98,8 +98,8 @@ const products = [
 		nisseQuote: "När en korv helt enkelt inte räcker till.",
 		category: "meal" as const,
 		ingredients: [ING.korvbrod, ING.grilladKorv, ING.potatismos],
-		condiments: [ING.raksallad, ING.bostongurka],
-		extras: [ING.rostadLok],
+		condiments: [],
+		extras: [ING.raksallad, ING.bostongurka, ING.rostadLok],
 		onMenu: true,
 		isLunch: true,
 		inStock: true,
@@ -113,8 +113,8 @@ const products = [
 		nisseQuote: "Det finns inget som en riktig rulle efter en lång dag.",
 		category: "meal" as const,
 		ingredients: [ING.tunnbrod, ING.grilladKorv, ING.potatismos],
-		condiments: [ING.raksallad, ING.bostongurka],
-		extras: [ING.rostadLok],
+		condiments: [],
+		extras: [ING.raksallad, ING.bostongurka, ING.rostadLok],
 		onMenu: true,
 		isLunch: true,
 		inStock: true,
@@ -128,8 +128,8 @@ const products = [
 		nisseQuote: "Min personliga favorit – ta med extra servetter!",
 		category: "meal" as const,
 		ingredients: [ING.tunnbrod, ING.chorizo, ING.potatismos],
-		condiments: [ING.vastkustsallad, ING.vitloksdressing],
-		extras: [ING.bacon, ING.jalapenos],
+		condiments: [ING.vitloksdressing],
+		extras: [ING.vastkustsallad, ING.bacon, ING.jalapenos],
 		onMenu: true,
 		isLunch: true,
 		inStock: true,

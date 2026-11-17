@@ -1,18 +1,20 @@
 {
-  "name": "my-monorepo",
-  "private": true,
-  "workspaces": [
-    "packages/*",
-    "apps/*",
-    "apps/frontend/src/*/*",
-    "apps/frontend/src/*/*/*"
-  ],
-  "scripts": {
-    "dev": "concurrently -n API,WEB -c blue,green \"npm run dev -w @app/backend\" \"npm run dev -w @app/frontend\"",
-    "typecheck": "npm run typecheck --workspaces --if-present"
-  },
-  "devDependencies": {
-    "concurrently": "^10.0.7",
-    "typescript": "^7.0.2"
-  }
+	"name": "my-monorepo",
+	"private": true,
+	"workspaces": [
+		"packages/*",
+		"apps/*",
+		"apps/frontend/src/*/*",
+		"apps/frontend/src/*/*/*"
+	],
+	"scripts": {
+		"dev": "concurrently -n API,WEB -c blue,green \"npm run dev -w @app/backend\" \"npm run dev -w @app/frontend\"",
+		"typecheck": "npm run typecheck --workspaces --if-present",
+		"seedIngredients": "tsx src/scripts/ingredientSeedingScript.ts",
+		"seedProducts": "tsx src/scripts/productSeedingScript.ts"
+	},
+	"devDependencies": {
+		"concurrently": "^10.0.7",
+		"typescript": "^7.0.2"
+	}
 }
