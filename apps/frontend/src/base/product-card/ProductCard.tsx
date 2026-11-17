@@ -1,3 +1,5 @@
+import { Button } from '@app/button';
+
 type ProductCardProps = {
 	name: string;
 	price: number;
@@ -66,6 +68,8 @@ export function ProductCard({
 					{description}
 				</p>
 				{comment && <p className='font-kalam text-sm'>Nisse: "{comment}"</p>}
+
+				<Button>Lägg till</Button>
 			</div>
 		</article>
 	);

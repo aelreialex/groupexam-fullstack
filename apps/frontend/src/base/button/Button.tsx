@@ -26,6 +26,10 @@ export function Button({
                 border-2 border-border-strong rounded-sm
                 shadow-[3px_3px_0_var(--color-border-strong)]
                 enabled:hover:shadow-[4px_4px_0_var(--color-border-strong)]
+				enabled:hover:-translate-y-x-px
+				enabled:active:translate-y-0
+				motion-safe:transition-[translate,box-shadow]
+				motion-safe:duration-150
                 focus-visible:outline-2
                 focus-visible:outline-offset-4
                 focus-visible:outline-border-strong
