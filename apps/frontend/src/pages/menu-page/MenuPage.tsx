@@ -3,7 +3,13 @@ import korvImage from '../../assets/korv-m-brod.png';
 
 export function MenuPage() {
 	return (
-		<div>
+		<div
+			className='
+		grid grid-cols-1
+		items-start
+		gap-6
+		md:grid-cols-2
+		lg:grid-cols-3'>
 			<ProductCard
 				imageSrc={korvImage}
 				imageAlt='Grillad korv med bröd'

@@ -36,10 +36,37 @@ export function ProductCard({
 			object-cover
 			'
 			/>
-			<h2>{name}</h2>
-			<p>{price} kr</p>
-			<p>{description}</p>
-			{comment && <p>Nisse: "{comment}"</p>}
+			<div className='space-y-3 p-4'>
+				<div
+					className='
+				flex
+				items-baseline 
+				justify-between
+				gap-4'>
+					<h2
+						className='
+					min-w-0
+					font-alfa-slab-one
+					text-lg'>
+						{name}
+					</h2>
+					<p
+						className='
+					shrink-0
+					text-sm
+					font-bold
+					text-brand-primary'>
+						{price} kr
+					</p>
+				</div>
+				<p
+					className='
+				text-sm
+				leading-relaxed'>
+					{description}
+				</p>
+				{comment && <p className='font-kalam text-sm'>Nisse: "{comment}"</p>}
+			</div>
 		</article>
 	);
 }
