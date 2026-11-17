@@ -1,0 +1,6 @@
+{
+  "name": "@app/header",
+  "private": true,
+  "type": "module",
+  "exports": "./index.ts"
+}
