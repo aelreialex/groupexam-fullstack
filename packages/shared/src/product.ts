@@ -4,7 +4,7 @@ import { createIngredientSchema } from "./ingredient";
 export const PRODUCT_CATEGORIES = ["meal", "drink"] as const;
 
 export const productCategorySchema = z.enum(PRODUCT_CATEGORIES);
-export type IProductCategory = z.infer<typeof productCategorySchema>;
+export type ProductCategory = z.infer<typeof productCategorySchema>;
 
 export const createProductSchema = z.object({
 	_id: z.string(),
@@ -16,7 +16,7 @@ export const createProductSchema = z.object({
 		.optional(),
 	nisseQuote: z.string().min(5).optional(),
 	category: productCategorySchema.default("meal"),
-	ingredients: z.array(createIngredientSchema).min(1),
+	ingredients: z.array(createIngredientSchema).default([]),
 	extras: z
 		.array(createIngredientSchema.extend({ role: z.literal("topping") }))
 		.max(3)
@@ -31,4 +31,4 @@ export const createProductSchema = z.object({
 	sortOrder: z.number().int().min(0),
 });
 
-export type IProduct = z.infer<typeof createProductSchema>;
+export type Product = z.infer<typeof createProductSchema>;

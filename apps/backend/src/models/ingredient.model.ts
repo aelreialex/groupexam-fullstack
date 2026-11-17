@@ -2,10 +2,10 @@ import { model, Schema } from "mongoose";
 import {
 	INGREDIENT_ROLES,
 	INGREDIENT_ALLERGENS,
-	type IIngredient,
+	type Ingredient,
 } from "@app/shared";
 
-const ingredientSchema = new Schema<Omit<IIngredient, "_id">>({
+const ingredientSchema = new Schema<Omit<Ingredient, "_id">>({
 	name: {
 		type: String,
 		required: true,
