@@ -32,6 +32,17 @@ export function Header() {
           `}
         >
           <NavLink
+            to="/"
+            end
+            className={({ isActive }) => `
+                          text-base font-semibold hover:border-b
+                          ${isActive ? "border-b text-brand-primary" : ""}
+                        `}
+          >
+            Hem
+          </NavLink>
+
+          <NavLink
             to="/menu"
             className={({ isActive }) => `
               text-base font-semibold hover:border-b
@@ -39,17 +50,6 @@ export function Header() {
             `}
           >
             Meny
-          </NavLink>
-
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) => `
-              text-base font-semibold hover:border-b
-              ${isActive ? "border-b text-brand-primary" : ""}
-            `}
-          >
-            Hem
           </NavLink>
         </nav>
       </div>
