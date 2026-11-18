@@ -42,43 +42,45 @@ const exampleProduct = createProductSchema.parse({
 
 export function MenuPage() {
 	return (
-		<div
-			className='
+		<div className='mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8'>
+			<div
+				className='
 		grid grid-cols-1
 		items-start
 		gap-6
 		md:grid-cols-2
 		lg:grid-cols-3'>
-			<ProductCard
-				product={exampleProduct}
-				imageSrc={korvImage}
-				imageAlt='Grillad korv med bröd'
-			/>
-			<ProductCard
-				product={exampleProduct}
-				imageSrc={korvImage}
-				imageAlt='Grillad korv med bröd'
-			/>
-			<ProductCard
-				product={exampleProduct}
-				imageSrc={korvImage}
-				imageAlt='Grillad korv med bröd'
-			/>
-			<ProductCard
-				product={exampleProduct}
-				imageSrc={korvImage}
-				imageAlt='Grillad korv med bröd'
-			/>
-			<ProductCard
-				product={exampleProduct}
-				imageSrc={korvImage}
-				imageAlt='Grillad korv med bröd'
-			/>
-			<ProductCard
-				product={exampleProduct}
-				imageSrc={korvImage}
-				imageAlt='Grillad korv med bröd'
-			/>
+				<ProductCard
+					product={exampleProduct}
+					imageSrc={korvImage}
+					imageAlt='Grillad korv med bröd'
+				/>
+				<ProductCard
+					product={exampleProduct}
+					imageSrc={korvImage}
+					imageAlt='Grillad korv med bröd'
+				/>
+				<ProductCard
+					product={exampleProduct}
+					imageSrc={korvImage}
+					imageAlt='Grillad korv med bröd'
+				/>
+				<ProductCard
+					product={exampleProduct}
+					imageSrc={korvImage}
+					imageAlt='Grillad korv med bröd'
+				/>
+				<ProductCard
+					product={exampleProduct}
+					imageSrc={korvImage}
+					imageAlt='Grillad korv med bröd'
+				/>
+				<ProductCard
+					product={exampleProduct}
+					imageSrc={korvImage}
+					imageAlt='Grillad korv med bröd'
+				/>
+			</div>
 		</div>
 	);
 }

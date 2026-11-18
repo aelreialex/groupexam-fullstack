@@ -1,30 +1,39 @@
-//import { Button } from '@app/button';
-//import { ShoppingBag } from 'lucide-react';
-// import { Counter } from "@app/counter";
-// import { useState } from "react";
+import { SectionTitle } from '@app/section-title';
 
-type ExampleComponentProps = {
-  // Add props here
-};
+export function HomePage() {
+	return (
+		<div>
+			<section className='py-12'>
+				<div className='mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8'>
+					<p>Här kommer hero-innehållet.</p>
+				</div>
+			</section>
 
-export function HomePage({}: ExampleComponentProps) {
-  return <div className="mb-6 flex-col gap-4">HomePage</div>;
+			<section className='py-12'>
+				<div className='mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8'>
+					<div className='flex flex-col gap-4 md:flex-row md:items-end md:justify-between'>
+						<SectionTitle eyebrow='Serveras 11-14'>Dagens lunch</SectionTitle>
+
+						<p className='font-kalam text-sm'>
+							"Det som står framme är dagens"
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<section className='bg-bg-section-alternate py-12'>
+				<div className='mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8'>
+					<SectionTitle eyebrow='Varje dag sen 1971'>Om Nisse</SectionTitle>
+				</div>
+			</section>
+
+			<section className='py-12'>
+				<div className='mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8'>
+					<SectionTitle eyebrow='Stortorget · mitt i stan'>
+						Hitta hit
+					</SectionTitle>
+				</div>
+			</section>
+		</div>
+	);
 }
-
-/*
-const [value, setValue] = useState(0);
-<Counter value={value} onChange={setValue}></Counter>
-*/
-
-/*
-			<Button variant='primary' aria-label='Varukorg, 4 varor'>
-				<ShoppingBag size={20} aria-hidden='true' />
-				<span>4</span>
-			</Button>
-			<Button className='w-full'>
-				Wow va häftigt! Skicka den här häftiga beställningen till Nisses kök så
-				han får grilla korven åt mig
-			</Button>
-			<Button variant='secondary'>Se hela menyn</Button>
-			<Button disabled>Inaktiverad</Button>
-			*/
