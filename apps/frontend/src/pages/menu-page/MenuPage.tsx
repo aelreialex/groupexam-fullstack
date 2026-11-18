@@ -1,6 +1,7 @@
 import { createProductSchema } from '@app/shared';
 import { ProductCard } from '@app/product-card';
 import korvImage from '../../assets/korv-m-brod.png';
+import { Pamphlet } from '@app/pamphlet';
 
 const exampleProduct = createProductSchema.parse({
 	_id: 'meal-1',
@@ -80,6 +81,9 @@ export function MenuPage() {
 					imageSrc={korvImage}
 					imageAlt='Grillad korv med bröd'
 				/>
+			</div>
+			<div className='mt-8'>
+				<Pamphlet title='Att dricka' children={null} />
 			</div>
 		</div>
 	);
