@@ -1,0 +1,6 @@
+{
+  "name": "@app/section",
+  "private": true,
+  "type": "module",
+  "exports": "./index.ts"
+}
