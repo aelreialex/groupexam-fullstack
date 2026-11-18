@@ -9,7 +9,8 @@
 		"seedIngredients": "tsx src/scripts/ingredientSeedingScript.ts",
 		"seedProducts": "tsx src/scripts/productSeedingScript.ts",
 		"fetchProducts": "tsx src/scripts/fetchPopulatedProducts.ts",
-		"fetchIngredients": "tsx src/scripts/fetchIngredientsScript.ts"
+		"fetchIngredients": "tsx src/scripts/fetchIngredientsScript.ts",
+		"seedUsers": "tsx src/scripts/userSeedingScript.ts"
 	},
 	"dependencies": {
 		"@app/shared": "*",
