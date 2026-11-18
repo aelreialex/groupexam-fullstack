@@ -122,7 +122,9 @@ export function MenuPage() {
 				/>
 			</ProductCardGrid>
 			<div className='mt-8'>
-				<Pamphlet title='Att dricka'>
+				<Pamphlet
+					title='Att dricka'
+					contentClassName='mx-auto w-full max-w-2xl'>
 					<div className='space-y-3'>
 						<p className='text-sm text-text-secondary'>
 							Läggs till separat i din beställning.

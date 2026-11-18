@@ -17,10 +17,10 @@ export function DrinkRow({
 			className='
         flex flex-col
         gap-3 py-4
-        border-b border-border-subtlelast:border-b-0
-        sm:flex-row sm:items-center sm: justify-between'>
+        border-t border-dashed border-border-subtle
+        sm:flex-row sm:items-center sm:justify-between'>
 			<div className='min-w-0'>
-				<h3 className='font-bold'>{product.name}</h3>
+				<h3>{product.name}</h3>
 
 				{product.description && (
 					<p className='text-sm text-text-secondary'>{product.description}</p>
