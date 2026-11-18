@@ -27,6 +27,12 @@ const productSchema = new Schema<MongooseIProduct>({
 		type: String,
 		required: false,
 	},
+	image: {
+		type: String,
+		required: true,
+		default:
+			"https://res.cloudinary.com/moiyaaa9/image/upload/v1795005821/produktbild_saknas.jpg",
+	},
 	category: {
 		type: String,
 		enum: PRODUCT_CATEGORIES,

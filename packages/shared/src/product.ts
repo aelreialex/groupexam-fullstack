@@ -15,6 +15,11 @@ export const createProductSchema = z.object({
 		.min(1, "Description requires at least 1 character")
 		.optional(),
 	nisseQuote: z.string().min(5).optional(),
+	image: z
+		.string()
+		.default(
+			"https://res.cloudinary.com/moiyaaa9/image/upload/v1795005821/produktbild_saknas.jpg",
+		),
 	category: productCategorySchema.default("meal"),
 	ingredients: z.array(createIngredientSchema).default([]),
 	extras: z
