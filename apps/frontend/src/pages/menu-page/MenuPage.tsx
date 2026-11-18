@@ -46,17 +46,38 @@ const exampleProduct = createProductSchema.parse({
 	],
 });
 
-const exampleDrink = createProductSchema.parse({
-	_id: 'drink-1',
-	name: 'Pucko',
-	description: 'Kall chokladdryck',
-	price: 20,
-	category: 'drink',
-	sortOrder: 0,
-});
+const exampleDrinks = createProductSchema.array().parse([
+	{
+		_id: 'drink-coffee',
+		name: 'Kaffe ur termos',
+		description: 'Starkt och varmt',
+		price: 22,
+		category: 'drink',
+		sortOrder: 0,
+	},
+	{
+		_id: 'drink-pucko',
+		name: 'Pucko',
+		description: 'Kall. Oftast',
+		price: 22,
+		category: 'drink',
+		sortOrder: 1,
+	},
+	{
+		_id: 'drink-soda',
+		name: 'Läsk',
+		description: 'Den som finns i kylen.',
+		price: 20,
+		category: 'drink',
+		sortOrder: 2,
+	},
+]);
 
 export function MenuPage() {
-	const [drinkQuantity, setDrinkQuantity] = useState(0);
+	const [drinkQuantities, setDrinkQuantities] = useState<
+		Record<string, number>
+	>({});
+
 	return (
 		<Section>
 			<div className='mb-6 space-y-3'>
@@ -102,10 +123,25 @@ export function MenuPage() {
 			</ProductCardGrid>
 			<div className='mt-8'>
 				<Pamphlet title='Att dricka'>
-					<DrinkRow
-						product={exampleDrink}
-						quantity={drinkQuantity}
-						onQuantityChange={setDrinkQuantity}></DrinkRow>
+					<div className='space-y-3'>
+						<p className='text-sm text-text-secondary'>
+							Läggs till separat i din beställning.
+						</p>
+					</div>
+
+					{exampleDrinks.map((drink) => (
+						<DrinkRow
+							key={drink._id}
+							product={drink}
+							quantity={drinkQuantities[drink._id] ?? 0}
+							onQuantityChange={(quantity) =>
+								setDrinkQuantities((current) => ({
+									...current,
+									[drink._id]: quantity,
+								}))
+							}
+						/>
+					))}
 				</Pamphlet>
 			</div>
 		</Section>
