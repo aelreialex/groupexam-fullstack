@@ -2,8 +2,8 @@ import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { Button } from '@app/button';
-import { Counter } from '@app/counter';
-import type { Product } from '@app/shared';
+import type { CartItem } from '../../core/cart/cart.types';
+import { CartItemRow } from './CartItemRow';
 import nisseProfile from '../../assets/images/nisse-profil.png';
 
 type CartDrawerProps = {
@@ -11,14 +11,6 @@ type CartDrawerProps = {
 	onClose: () => void;
 	items: CartItem[];
 	onQuantityChange: (id: string, quantity: number) => void;
-};
-
-export type CartItem = {
-	id: string;
-	product: Product;
-	quantity: number;
-	selectedExtras: Product['extras'];
-	selectedCondiments: Product['condiments'];
 };
 
 export function CartDrawer({
@@ -59,20 +51,6 @@ export function CartDrawer({
 			}
 		};
 	}, [isOpen, onClose]);
-
-	function getUnitPrice(item: CartItem) {
-		const extrasPrice = item.selectedExtras.reduce(
-			(sum, extra) => sum + extra.price,
-			0,
-		);
-
-		const condimentsPrice = item.selectedCondiments.reduce(
-			(sum, condiment) => sum + condiment.price,
-			0,
-		);
-
-		return item.product.price + extrasPrice + condimentsPrice;
-	}
 
 	return (
 		<div
@@ -128,34 +106,11 @@ export function CartDrawer({
 				) : (
 					<ul className='divide-y divide-dashed divide-border-subtle'>
 						{items.map((item) => (
-							<li
+							<CartItemRow
 								key={item.id}
-								className='flex items-center justify-between gap-4 py-4'>
-								<div className='min-w-0'>
-									<h3 className='font-semibold'>{item.product.name}</h3>
-
-									{[...item.selectedExtras, ...item.selectedCondiments].map(
-										(ingredient) => (
-											<p
-												key={ingredient._id}
-												className='text-sm text-text-secondary'>
-												{ingredient.name}
-											</p>
-										),
-									)}
-
-									<p className='mt-1 text-sm font-bold'>
-										{getUnitPrice(item) * item.quantity} kr
-									</p>
-								</div>
-
-								<div className='shrink-0'>
-									<Counter
-										value={item.quantity}
-										onChange={(quantity) => onQuantityChange(item.id, quantity)}
-									/>
-								</div>
-							</li>
+								item={item}
+								onQuantityChange={onQuantityChange}
+							/>
 						))}
 					</ul>
 				)}

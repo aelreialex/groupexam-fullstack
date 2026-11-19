@@ -3,7 +3,7 @@ import { Header } from '@app/header';
 import { Footer } from '@app/footer';
 import { useState } from 'react';
 import { CartDrawer } from '@app/cart-drawer';
-import type { CartItem } from '@app/cart-drawer';
+import type { CartItem } from '../core/cart/cart.types.ts';
 
 function CustomerLayout() {
 	const [isCartOpen, setIsCartOpen] = useState(false);
