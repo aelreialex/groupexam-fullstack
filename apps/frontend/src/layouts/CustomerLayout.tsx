@@ -18,9 +18,17 @@ function CustomerLayout() {
 		);
 	}
 
+	const cartQuantity = cartItems.reduce(
+		(total, item) => total + item.quantity,
+		0,
+	);
+
 	return (
 		<div className='flex flex-col min-h-screen'>
-			<Header onOpenCart={() => setIsCartOpen(true)} />
+			<Header
+				onOpenCart={() => setIsCartOpen(true)}
+				cartQuantity={cartQuantity}
+			/>
 
 			<CartDrawer
 				isOpen={isCartOpen}

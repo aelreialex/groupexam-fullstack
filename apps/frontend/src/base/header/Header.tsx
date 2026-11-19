@@ -5,9 +5,10 @@ import { ShoppingBag } from 'lucide-react';
 
 type HeaderProps = {
 	onOpenCart: () => void;
+	cartQuantity: number;
 };
 
-export function Header({ onOpenCart }: HeaderProps) {
+export function Header({ onOpenCart, cartQuantity }: HeaderProps) {
 	return (
 		<header className='w-full border-b border-border-strong'>
 			<div
@@ -20,10 +21,10 @@ export function Header({ onOpenCart }: HeaderProps) {
 				<div className='col-start-2 flex justify-end sm:col-start-3'>
 					<Button
 						variant='primary'
-						aria-label='Öppna varukorg, 4 produkter'
+						aria-label={`Öppna varukorgen, ${cartQuantity} produkter`}
 						onClick={onOpenCart}>
 						<ShoppingBag size={20} />
-						<span>4</span>
+						<span>{cartQuantity}</span>
 					</Button>
 				</div>
 
