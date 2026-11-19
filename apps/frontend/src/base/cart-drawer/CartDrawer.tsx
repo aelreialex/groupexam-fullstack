@@ -2,6 +2,7 @@ import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import type { CartItem } from '../../core/cart/cart.types';
+import { getCartTotal } from '../../core/cart/cart.utils';
 import { CartEmptyState } from './CartEmptyState';
 import { CartItemRow } from './CartItemRow';
 
@@ -93,15 +94,25 @@ export function CartDrawer({
 				{items.length === 0 ? (
 					<CartEmptyState onGoToMenu={goToMenu} />
 				) : (
-					<ul className='divide-y divide-dashed divide-border-subtle'>
-						{items.map((item) => (
-							<CartItemRow
-								key={item.id}
-								item={item}
-								onQuantityChange={onQuantityChange}
-							/>
-						))}
-					</ul>
+					<>
+						<ul className='divide-y divide-dashed divide-border-subtle'>
+							{items.map((item) => (
+								<CartItemRow
+									key={item.id}
+									item={item}
+									onQuantityChange={onQuantityChange}
+								/>
+							))}
+						</ul>
+
+						<div
+							className='
+                        flex items-center justify-between border-t border-border-subtle
+                        py-4'>
+							<span>Totalt</span>
+							<span className='font-bold'>{getCartTotal(items)} kr</span>
+						</div>
+					</>
 				)}
 			</aside>
 		</div>

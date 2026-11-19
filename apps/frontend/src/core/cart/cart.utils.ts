@@ -13,3 +13,10 @@ export function getUnitPrice(item: CartItem) {
 
 	return item.product.price + extrasPrice + condimentsPrice;
 }
+
+export function getCartTotal(items: CartItem[]) {
+	return items.reduce(
+		(total, item) => total + getUnitPrice(item) * item.quantity,
+		0,
+	);
+}
