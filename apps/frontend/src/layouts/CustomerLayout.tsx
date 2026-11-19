@@ -4,11 +4,11 @@ import { Footer } from '@app/footer';
 import { useState } from 'react';
 import { CartDrawer } from '@app/cart-drawer';
 import type { CartItem } from '../core/cart/cart.types.ts';
-
+import { mockCartItems } from '../core/cart/cart.mock';
 function CustomerLayout() {
 	const [isCartOpen, setIsCartOpen] = useState(false);
 
-	const [cartItems, setCartItems] = useState<CartItem[]>([]);
+	const [cartItems, setCartItems] = useState<CartItem[]>(mockCartItems);
 
 	function handleQuantityChange(id: string, quantity: number) {
 		setCartItems((currentItems) =>
