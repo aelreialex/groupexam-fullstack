@@ -1,4 +1,7 @@
 import { X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@app/button';
+import nisseProfile from '../../assets/images/nisse-profil.png';
 
 type CartDrawerProps = {
 	isOpen: boolean;
@@ -6,18 +9,31 @@ type CartDrawerProps = {
 };
 
 export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
-	if (!isOpen) return null;
+	const navigate = useNavigate();
+
+	function goToMenu() {
+		onClose();
+		navigate('/menu');
+	}
 
 	return (
-		<div className='fixed inset-0 z-50'>
-			<div className='absolute inset-0 bg-black/50' onClick={onClose} />
+		<div
+			inert={!isOpen}
+			className={`fixed inset-0 z-50 ${isOpen ? '' : 'pointer-events-none'}`}>
+			<div
+				className={`absolute inset-0 bg-black/50 motion-safe:transition-opacity motion-safe:duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+				onClick={onClose}
+			/>
 
 			<aside
-				className='
+				className={`
             absolute inset-y-0 right-0
             w-full max-w-sm overflow-y-auto
-            border-l border-border-strong bg-bg-surface
-            p-6'>
+            border-l border-border-strong 
+            bg-bg-surface p-6
+            motion-safe:transition-transform motion-safe:duration-300
+            ease-in-out
+            ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 				<div
 					className='
                 flex
@@ -29,9 +45,25 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 						Din beställning
 					</h2>
 
-					<button className='cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:ouline-border-strong'>
+					<button
+						type='button'
+						onClick={onClose}
+						aria-label='Stäng varukorgen'
+						className='cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-border-strong'>
 						<X size={20} aria-hidden='true' />
 					</button>
+				</div>
+
+				<div className='flex flex-col items-center pt-10 text-center'>
+					<img src={nisseProfile} alt='' className='w-40 -scale-x-100' />
+
+					<p className='font-kalam text-xl'>
+						Här var det tomt. Det går inte att äta luft.
+					</p>
+
+					<Button onClick={goToMenu} className='mt-3'>
+						Gå till menyn
+					</Button>
 				</div>
 			</aside>
 		</div>
