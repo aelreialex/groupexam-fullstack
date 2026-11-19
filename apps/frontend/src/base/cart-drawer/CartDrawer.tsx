@@ -2,6 +2,7 @@ import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { Button } from '@app/button';
+import { Counter } from '@app/counter';
 import type { Product } from '@app/shared';
 import nisseProfile from '../../assets/images/nisse-profil.png';
 
@@ -59,6 +60,20 @@ export function CartDrawer({
 		};
 	}, [isOpen, onClose]);
 
+	function getUnitPrice(item: CartItem) {
+		const extrasPrice = item.selectedExtras.reduce(
+			(sum, extra) => sum + extra.price,
+			0,
+		);
+
+		const condimentsPrice = item.selectedCondiments.reduce(
+			(sum, condiment) => sum + condiment.price,
+			0,
+		);
+
+		return item.product.price + extrasPrice + condimentsPrice;
+	}
+
 	return (
 		<div
 			inert={!isOpen}
@@ -98,17 +113,52 @@ export function CartDrawer({
 					</button>
 				</div>
 
-				<div className='flex flex-col items-center pt-10 text-center'>
-					<img src={nisseProfile} alt='' className='w-40 -scale-x-100' />
+				{items.length === 0 ? (
+					<div className='flex flex-col items-center pt-10 text-center'>
+						<img src={nisseProfile} alt='' className='w-40 -scale-x-100' />
 
-					<p className='font-kalam text-xl'>
-						Här var det tomt. Det går inte att äta luft.
-					</p>
+						<p className='font-kalam text-xl'>
+							Här var det tomt. Det går inte att äta luft.
+						</p>
 
-					<Button onClick={goToMenu} className='mt-3'>
-						Gå till menyn
-					</Button>
-				</div>
+						<Button onClick={goToMenu} className='mt-3'>
+							Gå till menyn
+						</Button>
+					</div>
+				) : (
+					<ul className='divide-y divide-dashed divide-border-subtle'>
+						{items.map((item) => (
+							<li
+								key={item.id}
+								className='flex items-center justify-between gap-4 py-4'>
+								<div className='min-w-0'>
+									<h3 className='font-semibold'>{item.product.name}</h3>
+
+									{[...item.selectedExtras, ...item.selectedCondiments].map(
+										(ingredient) => (
+											<p
+												key={ingredient._id}
+												className='text-sm text-text-secondary'>
+												{ingredient.name}
+											</p>
+										),
+									)}
+
+									<p className='mt-1 text-sm font-bold'>
+										{getUnitPrice(item) * item.quantity} kr
+									</p>
+								</div>
+
+								<div className='shrink-0'>
+									<Counter
+										value={item.quantity}
+										onChange={(quantity) => onQuantityChange(item.id, quantity)}
+									/>
+								</div>
+							</li>
+						))}
+					</ul>
+				)}
 			</aside>
 		</div>
 	);
