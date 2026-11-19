@@ -1,10 +1,9 @@
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
-import { Button } from '@app/button';
 import type { CartItem } from '../../core/cart/cart.types';
+import { CartEmptyState } from './CartEmptyState';
 import { CartItemRow } from './CartItemRow';
-import nisseProfile from '../../assets/images/nisse-profil.png';
 
 type CartDrawerProps = {
 	isOpen: boolean;
@@ -92,17 +91,7 @@ export function CartDrawer({
 				</div>
 
 				{items.length === 0 ? (
-					<div className='flex flex-col items-center pt-10 text-center'>
-						<img src={nisseProfile} alt='' className='w-40 -scale-x-100' />
-
-						<p className='font-kalam text-xl'>
-							Här var det tomt. Det går inte att äta luft.
-						</p>
-
-						<Button onClick={goToMenu} className='mt-3'>
-							Gå till menyn
-						</Button>
-					</div>
+					<CartEmptyState onGoToMenu={goToMenu} />
 				) : (
 					<ul className='divide-y divide-dashed divide-border-subtle'>
 						{items.map((item) => (
