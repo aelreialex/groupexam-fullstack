@@ -1,20 +1,63 @@
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import { Button } from '@app/button';
+import type { Product } from '@app/shared';
 import nisseProfile from '../../assets/images/nisse-profil.png';
 
 type CartDrawerProps = {
 	isOpen: boolean;
 	onClose: () => void;
+	items: CartItem[];
+	onQuantityChange: (id: string, quantity: number) => void;
 };
 
-export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
+export type CartItem = {
+	id: string;
+	product: Product;
+	quantity: number;
+	selectedExtras: Product['extras'];
+	selectedCondiments: Product['condiments'];
+};
+
+export function CartDrawer({
+	isOpen,
+	onClose,
+	items,
+	onQuantityChange,
+}: CartDrawerProps) {
 	const navigate = useNavigate();
 
 	function goToMenu() {
 		onClose();
 		navigate('/menu');
 	}
+
+	const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const previousFocus = document.activeElement;
+
+		closeButtonRef.current?.focus();
+
+		function handleKeyDown(event: KeyboardEvent) {
+			if (event.key === 'Escape') {
+				onClose();
+			}
+		}
+
+		document.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+
+			if (previousFocus instanceof HTMLElement) {
+				previousFocus.focus();
+			}
+		};
+	}, [isOpen, onClose]);
 
 	return (
 		<div
@@ -47,6 +90,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
 					<button
 						type='button'
+						ref={closeButtonRef}
 						onClick={onClose}
 						aria-label='Stäng varukorgen'
 						className='cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-border-strong'>
