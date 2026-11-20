@@ -10,8 +10,8 @@
 	"scripts": {
 		"dev": "concurrently -n API,WEB -c blue,green \"npm run dev -w @app/backend\" \"npm run dev -w @app/frontend\"",
 		"typecheck": "npm run typecheck --workspaces --if-present",
-		"seedIngredients": "tsx src/scripts/ingredientSeedingScript.ts",
-		"seedProducts": "tsx src/scripts/productSeedingScript.ts"
+		"seedIngredients": "tsx apps/backend/src/scripts/ingredientSeedingScript.ts",
+		"seedProducts": "tsx apps/backend/src/scripts/productSeedingScript.ts"
 	},
 	"devDependencies": {
 		"concurrently": "^10.0.7",
