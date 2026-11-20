@@ -48,11 +48,29 @@ export function useProductSelection(product: Product) {
 		setSelectedCondimentIds([]);
 	}
 
+	const selectedIngredients = [
+		...product.ingredients,
+		...product.extras.filter(
+			(extra) => selectedExtraIds.includes(extra._id) && extra.inStock,
+		),
+		...product.condiments.filter(
+			(condiment) =>
+				selectedCondimentIds.includes(condiment._id) && condiment.inStock,
+		),
+	];
+
+	const allergens = [
+		...new Set(
+			selectedIngredients.flatMap((ingredient) => ingredient.allergens),
+		),
+	].sort();
+
 	return {
 		selectedExtraIds,
 		selectedCondimentIds,
 		toggleExtra,
 		toggleCondiment,
 		addToCart,
+		allergens,
 	};
 }

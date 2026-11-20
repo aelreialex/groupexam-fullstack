@@ -3,7 +3,7 @@ import { Button } from '@app/button';
 import { useId, useState } from 'react';
 import { useProductSelection } from '../../core/menu/useProductSelection';
 import { ProductOptions } from './ProductOptions';
-
+import { ProductAllergens } from './ProductAllergens';
 type ProductCardProps = {
 	product: Product;
 	imageSrc: string;
@@ -20,6 +20,7 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 		toggleExtra,
 		toggleCondiment,
 		addToCart,
+		allergens,
 	} = useProductSelection(product);
 
 	function handleAddToCart() {
@@ -82,6 +83,7 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 					<p className='font-kalam text-sm'>Nisse: "{nisseQuote}"</p>
 				)}
 				<div className='mt-auto space-y-3'>
+					<ProductAllergens allergens={allergens} />
 					<ProductOptions
 						product={product}
 						isExpanded={isExpanded}
