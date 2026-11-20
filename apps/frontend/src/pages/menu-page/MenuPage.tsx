@@ -1,6 +1,6 @@
-import { createProductSchema } from '@app/shared';
+import type { Menu } from '@app/shared';
+import { useOutletContext } from 'react-router-dom';
 import { ProductCard } from '@app/product-card';
-import korvImage from '../../assets/korv-m-brod.png';
 import { Pamphlet } from '@app/pamphlet';
 import { ProductCardGrid } from '@app/product-card-grid';
 import { Section } from '@app/section';
@@ -8,72 +8,8 @@ import { SectionTitle } from '@app/section-title';
 import { DrinkRow } from '@app/drink-row';
 import { useState } from 'react';
 
-const exampleProduct = createProductSchema.parse({
-	_id: 'meal-1',
-	name: 'Grillad korv med bröd',
-	price: 30,
-	description:
-		'Ordentligt grillad i mjukt bröd, med senap, ketchup och rostad lök.',
-	nisseQuote: 'Lite stökig. Precis som det ska vara.',
-	sortOrder: 0,
-	ingredients: [
-		{
-			_id: 'ingredient-bread',
-			name: 'Korvbröd',
-			role: 'base',
-		},
-		{
-			_id: 'ingredient-sausage',
-			name: 'Grillkorv',
-			role: 'sausage',
-		},
-	],
-	extras: [
-		{
-			_id: 'extra-onion',
-			name: 'Extra rostad lök',
-			role: 'topping',
-			price: 5,
-			isCustomizable: true,
-		},
-		{
-			_id: 'extra-salad',
-			name: 'Extra räksallad',
-			role: 'topping',
-			price: 10,
-			isCustomizable: true,
-		},
-	],
-});
-
-const exampleDrinks = createProductSchema.array().parse([
-	{
-		_id: 'drink-coffee',
-		name: 'Kaffe ur termos',
-		description: 'Starkt och varmt',
-		price: 22,
-		category: 'drink',
-		sortOrder: 0,
-	},
-	{
-		_id: 'drink-pucko',
-		name: 'Pucko',
-		description: 'Kall. Oftast',
-		price: 22,
-		category: 'drink',
-		sortOrder: 1,
-	},
-	{
-		_id: 'drink-soda',
-		name: 'Läsk',
-		description: 'Den som finns i kylen.',
-		price: 20,
-		category: 'drink',
-		sortOrder: 2,
-	},
-]);
-
 export function MenuPage() {
+	const menu = useOutletContext<Menu | undefined>();
 	const [drinkQuantities, setDrinkQuantities] = useState<
 		Record<string, number>
 	>({});
@@ -90,36 +26,14 @@ export function MenuPage() {
 				</p>
 			</div>
 			<ProductCardGrid>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
+				{menu?.meals.map((meal) => (
+					<ProductCard
+						key={meal._id}
+						product={meal}
+						imageSrc={meal.image}
+						imageAlt={meal.name}
+					/>
+				))}
 			</ProductCardGrid>
 			<div className='mt-8'>
 				<Pamphlet
@@ -131,7 +45,7 @@ export function MenuPage() {
 						</p>
 					</div>
 
-					{exampleDrinks.map((drink) => (
+					{menu?.drinks.map((drink) => (
 						<DrinkRow
 							key={drink._id}
 							product={drink}
