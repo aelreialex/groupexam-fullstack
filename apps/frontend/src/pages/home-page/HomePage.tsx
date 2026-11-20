@@ -1,5 +1,6 @@
 import type { Menu } from '@app/shared';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNissesUsusal } from '../../core/menu/useNissesUsual';
 
 import { SectionTitle } from '@app/section-title';
 import { Pamphlet } from '@app/pamphlet';
@@ -18,6 +19,9 @@ import Star from '../../assets/images/Star.svg';
 export function HomePage() {
 	const menu = useOutletContext<Menu | undefined>();
 	const lunchMeals = menu?.meals.filter((meal) => meal.isLunch) ?? [];
+
+	const navigate = useNavigate();
+	const nissesUsual = useNissesUsusal(menu);
 
 	return (
 		<div>
@@ -51,8 +55,16 @@ export function HomePage() {
 						</aside>
 
 						<div className='flex flex-wrap gap-4'>
-							<Button>Nisses vanliga · 45 kr</Button>
-							<Button variant='secondary'>Se hela menyn</Button>
+							<Button
+								onClick={nissesUsual.addToCart}
+								disabled={!nissesUsual.isAvailable}>
+								Nisses vanliga{' '}
+								{nissesUsual.price !== undefined &&
+									` · ${nissesUsual.price} kr`}
+							</Button>
+							<Button variant='secondary' onClick={() => navigate('/menu')}>
+								Se hela menyn
+							</Button>
 						</div>
 					</div>
 
