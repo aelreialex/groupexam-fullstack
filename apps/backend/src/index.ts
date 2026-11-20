@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
-import menuRouter from "./routes/menu.route"
+import menuRouter from "./routes/menu.route";
 
 // config
 
@@ -22,11 +22,13 @@ const PORT = process.env.PORT || 8080;
 
 const app = express();
 
+const frontendAdress = process.env.FRONTEND_ADDRESS;
+
 // middlewares
 app.use(express.json());
 app.use(
 	cors({
-		origin: `http://localhost:5173`,
+		origin: frontendAdress,
 		credentials: true,
 	}),
 );
