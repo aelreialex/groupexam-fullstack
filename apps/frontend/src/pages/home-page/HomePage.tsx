@@ -1,4 +1,5 @@
-import { createProductSchema } from '@app/shared';
+import type { Menu } from '@app/shared';
+import { useOutletContext } from 'react-router-dom';
 
 import { SectionTitle } from '@app/section-title';
 import { Pamphlet } from '@app/pamphlet';
@@ -14,45 +15,10 @@ import NisseFullSm from '../../assets/images/NisseFullSm.svg';
 import NisseFullLg from '../../assets/images/NisseFullLg.svg';
 import Star from '../../assets/images/Star.svg';
 
-const exampleProduct = createProductSchema.parse({
-	_id: 'meal-1',
-	name: 'Grillad korv med bröd',
-	price: 30,
-	description:
-		'Ordentligt grillad i mjukt bröd, med senap, ketchup och rostad lök.',
-	nisseQuote: 'Lite stökig. Precis som det ska vara.',
-	sortOrder: 0,
-	ingredients: [
-		{
-			_id: 'ingredient-bread',
-			name: 'Korvbröd',
-			role: 'base',
-		},
-		{
-			_id: 'ingredient-sausage',
-			name: 'Grillkorv',
-			role: 'sausage',
-		},
-	],
-	extras: [
-		{
-			_id: 'extra-onion',
-			name: 'Extra rostad lök',
-			role: 'topping',
-			price: 5,
-			isCustomizable: true,
-		},
-		{
-			_id: 'extra-salad',
-			name: 'Extra räksallad',
-			role: 'topping',
-			price: 10,
-			isCustomizable: true,
-		},
-	],
-});
-
 export function HomePage() {
+	const menu = useOutletContext<Menu | undefined>();
+	const lunchMeals = menu?.meals.filter((meal) => meal.isLunch) ?? [];
+
 	return (
 		<div>
 			{/* HERO SECTION */}
@@ -140,21 +106,14 @@ export function HomePage() {
 				</div>
 
 				<ProductCardGrid>
-					<ProductCard
-						product={exampleProduct}
-						imageSrc={korvImage}
-						imageAlt='Grillad korv med bröd'
-					/>
-					<ProductCard
-						product={exampleProduct}
-						imageSrc={korvImage}
-						imageAlt='Grillad korv med bröd'
-					/>
-					<ProductCard
-						product={exampleProduct}
-						imageSrc={korvImage}
-						imageAlt='Grillad korv med bröd'
-					/>
+					{lunchMeals.map((meal) => (
+						<ProductCard
+							key={meal._id}
+							product={meal}
+							imageSrc={meal.image}
+							imageAlt={meal.name}
+						/>
+					))}
 				</ProductCardGrid>
 			</Section>
 

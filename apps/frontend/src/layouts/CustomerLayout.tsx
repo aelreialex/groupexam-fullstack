@@ -1,12 +1,18 @@
+import { useQuery } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
 import { Header } from '@app/header';
 import { Footer } from '@app/footer';
 import { useState } from 'react';
 import { CartDrawer } from '@app/cart-drawer';
 import { useCart } from '../core/cart/CartProvider';
+import { getMenu } from '../core/menu/menu.api';
 
 function CustomerLayout() {
 	const [isCartOpen, setIsCartOpen] = useState(false);
+	const { data: menu } = useQuery({
+		queryKey: ['menu'],
+		queryFn: getMenu,
+	});
 
 	const { items: cartItems, changeQuantity } = useCart();
 
@@ -30,7 +36,7 @@ function CustomerLayout() {
 			/>
 
 			<main className='w-full flex-1'>
-				<Outlet />
+				<Outlet context={menu} />
 			</main>
 
 			<Footer />
