@@ -1,0 +1,6 @@
+{
+  "name": "@app/menu-page",
+  "private": true,
+  "type": "module",
+  "exports": "./index.ts"
+}

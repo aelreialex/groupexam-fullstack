@@ -1,0 +1,276 @@
+[
+  {
+    "_id": "6afaf5766263f8da9d8010eb",
+    "name": "Korvbröd",
+    "role": "base",
+    "price": 10,
+    "allergens": [
+      "gluten"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010ec",
+    "name": "Briochebröd",
+    "role": "base",
+    "price": 15,
+    "allergens": [
+      "gluten",
+      "lactose",
+      "egg"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010ed",
+    "name": "Tunnbröd",
+    "role": "base",
+    "price": 18,
+    "allergens": [
+      "gluten"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010ee",
+    "name": "Glutenfritt korvbröd",
+    "role": "base",
+    "price": 15,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010ef",
+    "name": "Potatismos",
+    "role": "base",
+    "price": 25,
+    "allergens": [
+      "lactose"
+    ],
+    "isCustomizable": false,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f0",
+    "name": "Pommes frites",
+    "role": "base",
+    "price": 25,
+    "allergens": [],
+    "isCustomizable": false,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f1",
+    "name": "Kokt korv",
+    "role": "sausage",
+    "price": 15,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f2",
+    "name": "Grillad korv",
+    "role": "sausage",
+    "price": 18,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f3",
+    "name": "Chorizo",
+    "role": "sausage",
+    "price": 25,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f4",
+    "name": "Ost- och baconkorv",
+    "role": "sausage",
+    "price": 28,
+    "allergens": [
+      "lactose"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f5",
+    "name": "Bratwurst",
+    "role": "sausage",
+    "price": 26,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f6",
+    "name": "Vegokorv",
+    "role": "sausage",
+    "price": 22,
+    "allergens": [
+      "gluten"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f7",
+    "name": "Ketchup",
+    "role": "condiment",
+    "price": 0,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f8",
+    "name": "Senap",
+    "role": "condiment",
+    "price": 0,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010f9",
+    "name": "Stark senap",
+    "role": "condiment",
+    "price": 0,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010fa",
+    "name": "Bostongurka",
+    "role": "topping",
+    "price": 5,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010fb",
+    "name": "Räksallad",
+    "role": "topping",
+    "price": 15,
+    "allergens": [
+      "egg",
+      "lactose"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010fc",
+    "name": "Västkustsallad",
+    "role": "topping",
+    "price": 15,
+    "allergens": [
+      "egg",
+      "lactose"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010fd",
+    "name": "Remouladsås",
+    "role": "condiment",
+    "price": 8,
+    "allergens": [
+      "egg"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010fe",
+    "name": "Vitlöksdressing",
+    "role": "condiment",
+    "price": 8,
+    "allergens": [
+      "egg",
+      "lactose"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d8010ff",
+    "name": "Rostad lök",
+    "role": "topping",
+    "price": 5,
+    "allergens": [
+      "gluten"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d801100",
+    "name": "Finhackad rå lök",
+    "role": "topping",
+    "price": 5,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d801101",
+    "name": "Surkål",
+    "role": "topping",
+    "price": 10,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d801102",
+    "name": "Jalapeños",
+    "role": "topping",
+    "price": 8,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d801103",
+    "name": "Knaperstekt bacon",
+    "role": "topping",
+    "price": 12,
+    "allergens": [],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d801104",
+    "name": "Smält cheddarost",
+    "role": "topping",
+    "price": 10,
+    "allergens": [
+      "lactose"
+    ],
+    "isCustomizable": true,
+    "inStock": true
+  },
+  {
+    "_id": "6afaf5766263f8da9d801105",
+    "name": "Riven ost",
+    "role": "topping",
+    "price": 8,
+    "allergens": [
+      "lactose"
+    ],
+    "isCustomizable": true,
+    "inStock": false
+  }
+]
