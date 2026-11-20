@@ -30,6 +30,8 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 		);
 
 		addItem(product, selectedExtras);
+		setSelectedExtraIds([]);
+		setIsExpanded(false);
 	}
 
 	return (
