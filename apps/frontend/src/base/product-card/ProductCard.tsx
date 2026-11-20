@@ -1,11 +1,8 @@
 import type { Product } from '@app/shared';
 import { Button } from '@app/button';
 import { useId, useState } from 'react';
-import { useCart } from '../../core/cart/CartProvider';
-import {
-	MAX_EXTRAS_PER_MEAL,
-	MAX_CONDIMENTS_PER_MEAL,
-} from '../../core/cart/cart.constants';
+import { useProductSelection } from '../../core/menu/useProductSelection';
+import { ProductOptions } from './ProductOptions';
 
 type ProductCardProps = {
 	product: Product;
@@ -16,42 +13,17 @@ type ProductCardProps = {
 export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 	const { name, price, description, nisseQuote } = product;
 	const [isExpanded, setIsExpanded] = useState(false);
-	const [selectedExtraIds, setSelectedExtraIds] = useState<string[]>([]);
-	const [selectedCondimentIds, setSelectedCondimentIds] = useState<string[]>(
-		[],
-	);
 	const extrasId = useId();
-	const { addItem } = useCart();
-
-	function toggleExtra(extraId: string) {
-		setSelectedExtraIds((currentIds) =>
-			currentIds.includes(extraId)
-				? currentIds.filter((id) => id !== extraId)
-				: [...currentIds, extraId],
-		);
-	}
-
-	function toggleCondiment(condimentId: string) {
-		setSelectedCondimentIds((currentIds) =>
-			currentIds.includes(condimentId)
-				? currentIds.filter((id) => id !== condimentId)
-				: [...currentIds, condimentId],
-		);
-	}
+	const {
+		selectedExtraIds,
+		selectedCondimentIds,
+		toggleExtra,
+		toggleCondiment,
+		addToCart,
+	} = useProductSelection(product);
 
 	function handleAddToCart() {
-		const selectedExtras = product.extras.filter(
-			(extra) => selectedExtraIds.includes(extra._id) && extra.inStock,
-		);
-
-		const selectedCondiments = product.condiments.filter(
-			(condiment) =>
-				selectedCondimentIds.includes(condiment._id) && condiment.inStock,
-		);
-
-		addItem(product, selectedExtras, selectedCondiments);
-		setSelectedExtraIds([]);
-		setSelectedCondimentIds([]);
+		addToCart();
 		setIsExpanded(false);
 	}
 
@@ -108,83 +80,17 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 				{nisseQuote && (
 					<p className='font-kalam text-sm'>Nisse: "{nisseQuote}"</p>
 				)}
+				<ProductOptions
+					product={product}
+					isExpanded={isExpanded}
+					extrasId={extrasId}
+					onToggleExpanded={() => setIsExpanded((current) => !current)}
+					selectedExtraIds={selectedExtraIds}
+					selectedCondimentIds={selectedCondimentIds}
+					toggleExtra={toggleExtra}
+					toggleCondiment={toggleCondiment}
+				/>
 
-				<div className='border-y border-dashed border-border-subtle'>
-					<button
-						type='button'
-						aria-expanded={isExpanded}
-						aria-controls={extrasId}
-						onClick={() => setIsExpanded((current) => !current)}
-						className='
-						flex w-full
-						cursor-pointer
-						items-center justify-between
-						gap-4 py-3
-						text-left text-sm font-bold
-						focus-visible:outline-2
-						focus-visible:outline-offset-2
-						focus-visible:outline-border-strong'>
-						<span>Välj tillbehör</span>
-						<span aria-hidden='true'>{isExpanded ? '-' : '+'}</span>
-					</button>
-
-					<div id={extrasId} hidden={!isExpanded} className='space-y-2 pb-3'>
-						{product.extras.map((extra) => (
-							<label
-								key={extra._id}
-								className='flex items-center gap-2 text-sm'>
-								<input
-									type='checkbox'
-									checked={selectedExtraIds.includes(extra._id)}
-									onChange={() => toggleExtra(extra._id)}
-									disabled={
-										!extra.inStock ||
-										(selectedExtraIds.length >= MAX_EXTRAS_PER_MEAL &&
-											!selectedExtraIds.includes(extra._id))
-									}
-									className='size-4 accent-brand-primary'
-								/>
-
-								<span className='flex-1'>{extra.name}</span>
-								<span>{extra.inStock ? `+${extra.price} kr` : 'Slut'}</span>
-							</label>
-						))}
-
-						{product.condiments.length > 0 && (
-							<>
-								<h3 className='pt-3 font-bold text-sm'>Såser och dressingar</h3>
-
-								{product.condiments.map((condiment) => (
-									<label
-										key={condiment._id}
-										className='flex items-center gap-2 text-sm'>
-										<input
-											type='checkbox'
-											checked={selectedCondimentIds.includes(condiment._id)}
-											onChange={() => toggleCondiment(condiment._id)}
-											disabled={
-												!condiment.inStock ||
-												(selectedCondimentIds.length >=
-													MAX_CONDIMENTS_PER_MEAL &&
-													!selectedCondimentIds.includes(condiment._id))
-											}
-											className='size-4 accent-brand-primary'
-										/>
-
-										<span className='flex-1'>{condiment.name}</span>
-										<span>
-											{condiment.inStock
-												? condiment.price === 0
-													? 'Ingår'
-													: `${condiment.price} kr`
-												: 'Slut'}
-										</span>
-									</label>
-								))}
-							</>
-						)}
-					</div>
-				</div>
 				<Button onClick={handleAddToCart} disabled={!product.inStock}>
 					Lägg till
 				</Button>
