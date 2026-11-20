@@ -6,13 +6,11 @@ import { ProductCardGrid } from '@app/product-card-grid';
 import { Section } from '@app/section';
 import { SectionTitle } from '@app/section-title';
 import { DrinkRow } from '@app/drink-row';
-import { useState } from 'react';
+import { useDrinkCart } from '../../core/cart/useDrinkCart';
 
 export function MenuPage() {
 	const menu = useOutletContext<Menu | undefined>();
-	const [drinkQuantities, setDrinkQuantities] = useState<
-		Record<string, number>
-	>({});
+	const drinkCart = useDrinkCart();
 
 	return (
 		<Section>
@@ -49,12 +47,9 @@ export function MenuPage() {
 						<DrinkRow
 							key={drink._id}
 							product={drink}
-							quantity={drinkQuantities[drink._id] ?? 0}
+							quantity={drinkCart.getQuantity(drink._id)}
 							onQuantityChange={(quantity) =>
-								setDrinkQuantities((current) => ({
-									...current,
-									[drink._id]: quantity,
-								}))
+								drinkCart.setQuantity(drink, quantity)
 							}
 						/>
 					))}
