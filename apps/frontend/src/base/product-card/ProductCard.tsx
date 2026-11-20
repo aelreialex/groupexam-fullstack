@@ -1,6 +1,7 @@
 import type { Product } from '@app/shared';
 import { Button } from '@app/button';
 import { useId, useState } from 'react';
+import { useCart } from '../../core/cart/CartProvider';
 
 type ProductCardProps = {
 	product: Product;
@@ -13,6 +14,7 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const extrasId = useId();
 	const [selectedExtraIds, setSelectedExtraIds] = useState<string[]>([]);
+	const { addItem } = useCart();
 
 	function toggleExtra(extraId: string) {
 		setSelectedExtraIds((currentIds) =>
@@ -20,6 +22,14 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 				? currentIds.filter((id) => id !== extraId)
 				: [...currentIds, extraId],
 		);
+	}
+
+	function handleAddToCart() {
+		const selectedExtras = product.extras.filter(
+			(extra) => selectedExtraIds.includes(extra._id) && extra.inStock,
+		);
+
+		addItem(product, selectedExtras);
 	}
 
 	return (
@@ -114,7 +124,9 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 						))}
 					</div>
 				</div>
-				<Button>Lägg till</Button>
+				<Button onClick={handleAddToCart} disabled={!product.inStock}>
+					Lägg till
+				</Button>
 			</div>
 		</article>
 	);
