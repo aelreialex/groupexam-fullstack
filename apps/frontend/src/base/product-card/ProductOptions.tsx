@@ -45,7 +45,10 @@ export function ProductOptions({
 				<span aria-hidden='true'>{isExpanded ? '-' : '+'}</span>
 			</button>
 
-			<div id={extrasId} hidden={!isExpanded} className='space-y-2 pb-3'>
+			<div
+				id={extrasId}
+				hidden={!isExpanded}
+				className='max-h-48 space-y-2 overflow-y-auto pb-3 pr-2'>
 				{product.extras.map((extra) => (
 					<label key={extra._id} className='flex items-center gap-2 text-sm'>
 						<input

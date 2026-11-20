@@ -30,6 +30,7 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 	return (
 		<article
 			className='
+			flex h-full flex-col
 			overflow-hidden
 			rounded-sm
 			border
@@ -48,7 +49,7 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 			object-cover
 			'
 			/>
-			<div className='space-y-3 p-4'>
+			<div className='flex flex-1 flex-col gap-3 p-4'>
 				<div
 					className='
 				flex
@@ -80,20 +81,22 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 				{nisseQuote && (
 					<p className='font-kalam text-sm'>Nisse: "{nisseQuote}"</p>
 				)}
-				<ProductOptions
-					product={product}
-					isExpanded={isExpanded}
-					extrasId={extrasId}
-					onToggleExpanded={() => setIsExpanded((current) => !current)}
-					selectedExtraIds={selectedExtraIds}
-					selectedCondimentIds={selectedCondimentIds}
-					toggleExtra={toggleExtra}
-					toggleCondiment={toggleCondiment}
-				/>
+				<div className='mt-auto space-y-3'>
+					<ProductOptions
+						product={product}
+						isExpanded={isExpanded}
+						extrasId={extrasId}
+						onToggleExpanded={() => setIsExpanded((current) => !current)}
+						selectedExtraIds={selectedExtraIds}
+						selectedCondimentIds={selectedCondimentIds}
+						toggleExtra={toggleExtra}
+						toggleCondiment={toggleCondiment}
+					/>
 
-				<Button onClick={handleAddToCart} disabled={!product.inStock}>
-					Lägg till
-				</Button>
+					<Button onClick={handleAddToCart} disabled={!product.inStock}>
+						Lägg till
+					</Button>
+				</div>
 			</div>
 		</article>
 	);
