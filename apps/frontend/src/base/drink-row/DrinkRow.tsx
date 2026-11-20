@@ -1,5 +1,6 @@
 import type { Product } from '@app/shared';
 import { Counter } from '@app/counter';
+import { MAX_DRINK_QUANTITY } from '../../core/cart/cart.constants';
 
 type DrinkRowProps = {
 	product: Product;
@@ -34,6 +35,7 @@ export function DrinkRow({
 					value={quantity}
 					onChange={onQuantityChange}
 					disabled={!product.inStock}
+					max={MAX_DRINK_QUANTITY}
 				/>
 			</div>
 		</div>

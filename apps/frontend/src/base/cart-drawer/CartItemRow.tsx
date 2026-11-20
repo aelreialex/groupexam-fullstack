@@ -1,6 +1,7 @@
 import { Counter } from '@app/counter';
 import type { CartItem } from '../../core/cart/cart.types';
 import { getUnitPrice } from '../../core/cart/cart.utils';
+import { MAX_DRINK_QUANTITY } from '../../core/cart/cart.constants';
 
 type CartItemRowProps = {
 	item: CartItem;
@@ -33,6 +34,7 @@ export function CartItemRow({ item, onQuantityChange }: CartItemRowProps) {
 				<Counter
 					value={item.quantity}
 					onChange={(quantity) => onQuantityChange(item.id, quantity)}
+					max={item.product.category === 'drink' ? MAX_DRINK_QUANTITY : 99}
 				/>
 			</div>
 		</li>
