@@ -24,11 +24,11 @@ export const createProductSchema = z.object({
 	ingredients: z.array(createIngredientSchema).default([]),
 	extras: z
 		.array(createIngredientSchema.extend({ role: z.literal("topping") }))
-		.max(3)
+		//.max(3)
 		.default([]),
 	condiments: z
 		.array(createIngredientSchema.extend({ role: z.literal("condiment") }))
-		.max(2)
+		//.max(2)
 		.default([]),
 	onMenu: z.boolean().default(true),
 	isLunch: z.boolean().default(false),
