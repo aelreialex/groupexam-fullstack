@@ -7,6 +7,7 @@ import {
 } from 'react';
 import type { CartItem } from './cart.types';
 import type { Product } from '@app/shared';
+import { MAX_DRINK_QUANTITY } from './cart.constants';
 
 type CartContextValue = {
 	items: CartItem[];
@@ -26,7 +27,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
 	const changeQuantity = useCallback((id: string, quantity: number) => {
 		setItems((currentItems) =>
 			currentItems
-				.map((item) => (item.id === id ? { ...item, quantity } : item))
+				.map((item) => {
+					if (item.id !== id) return item;
+
+					const max =
+						item.product.category === 'drink' ? MAX_DRINK_QUANTITY : 99;
+
+					return { ...item, quantity: Math.max(0, Math.min(max, quantity)) };
+				})
 				.filter((item) => item.quantity > 0),
 		);
 	}, []);
@@ -64,7 +72,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
 				if (existingItem) {
 					return currentItems.map((item) =>
 						item.id === existingItem.id
-							? { ...item, quantity: Math.min(99, item.quantity + 1) }
+							? {
+									...item,
+									quantity: Math.min(
+										item.product.category === 'drink' ? MAX_DRINK_QUANTITY : 99,
+										item.quantity + 1,
+									),
+								}
 							: item,
 					);
 				}
