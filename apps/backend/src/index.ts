@@ -26,12 +26,35 @@ const frontendAdress = process.env.FRONTEND_ADDRESS;
 
 // middlewares
 app.use(express.json());
+// app.use(
+// 	cors({
+// 		origin: frontendAdress,
+// 		credentials: true,
+// 	}),
+// );
+
+const allowedOrigins = [
+	frontendAdress?.replace(/\/$/, ""),
+	"http://localhost:5173",
+].filter(Boolean);
+
 app.use(
 	cors({
-		origin: frontendAdress,
+		origin: (origin, callback) => {
+			if (
+				!origin ||
+				allowedOrigins.includes(origin) ||
+				origin.endsWith(".vercel.app")
+			) {
+				callback(null, true);
+			} else {
+				callback(new Error("Not allowed by CORS"));
+			}
+		},
 		credentials: true,
 	}),
 );
+
 app.use(cookieParser());
 
 //routes
