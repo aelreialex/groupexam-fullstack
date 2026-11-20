@@ -2,6 +2,10 @@ import type { Product } from '@app/shared';
 import { Button } from '@app/button';
 import { useId, useState } from 'react';
 import { useCart } from '../../core/cart/CartProvider';
+import {
+	MAX_EXTRAS_PER_MEAL,
+	MAX_CONDIMENTS_PER_MEAL,
+} from '../../core/cart/cart.constants';
 
 type ProductCardProps = {
 	product: Product;
@@ -133,7 +137,11 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 									type='checkbox'
 									checked={selectedExtraIds.includes(extra._id)}
 									onChange={() => toggleExtra(extra._id)}
-									disabled={!extra.inStock}
+									disabled={
+										!extra.inStock ||
+										(selectedExtraIds.length >= MAX_EXTRAS_PER_MEAL &&
+											!selectedExtraIds.includes(extra._id))
+									}
 									className='size-4 accent-brand-primary'
 								/>
 
@@ -154,7 +162,12 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 											type='checkbox'
 											checked={selectedCondimentIds.includes(condiment._id)}
 											onChange={() => toggleCondiment(condiment._id)}
-											disabled={!condiment.inStock}
+											disabled={
+												!condiment.inStock ||
+												(selectedCondimentIds.length >=
+													MAX_CONDIMENTS_PER_MEAL &&
+													!selectedCondimentIds.includes(condiment._id))
+											}
 											className='size-4 accent-brand-primary'
 										/>
 
