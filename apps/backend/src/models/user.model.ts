@@ -3,19 +3,18 @@ import { type User } from "@app/shared";
 
 
 const userSchema = new Schema<Omit<User, "_id">>({
-    userName: {
+    username: {
         type: String,
         required: true,
         unique: true,
         trim: true
     },
-    passwordHashed: {
+    password: {
         type: String,
         required: true
     },
     role: {
         type: String,
-        required: true,
         enum: ['staff', 'admin'],
         default: 'staff'
     }
