@@ -6,6 +6,7 @@ type PamphletProps = {
 	children: ReactNode;
 	contentClassName?: string;
 	headerAside?: ReactNode;
+	variant?: 'default' | 'summary';
 };
 
 export function Pamphlet({
@@ -14,14 +15,18 @@ export function Pamphlet({
 	children,
 	contentClassName,
 	headerAside,
+	variant = 'default',
 }: PamphletProps) {
 	return (
 		<article
 			className={`
-        p-8 border-4 border-border-pamphlet 
+        p-8 bg-bg-surface
         ${rotate ? 'rotate-2' : ''}
-        bg-bg-surface
-        shadow-[0_10px_24px_-14px_#382b22]
+        ${
+					variant === 'summary'
+						? 'rounded-sm border-2 border-border-pamphlet shadow-[5px_5px_0_var(--color-border-strong)]'
+						: 'border-4 border-border-pamphlet shadow-[0_10px_24px_-14px_#382b22]'
+				}
       `}>
 			<div className={`flex flex-col gap-4 ${contentClassName ?? ''}`}>
 				{headerAside != null ? (

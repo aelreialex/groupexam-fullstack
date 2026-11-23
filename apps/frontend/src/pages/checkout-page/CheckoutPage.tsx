@@ -43,7 +43,7 @@ export function CheckoutPage() {
 					</ul>
 				</Pamphlet>
 
-				<Pamphlet title='Att betala'>
+				<Pamphlet title='Att betala' variant='summary'>
 					<div className='space-y-4'>
 						<div className='flex items-baseline justify-between gap-4'>
 							<span className='font-bold'>Totalt</span>
