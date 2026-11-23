@@ -5,6 +5,7 @@ import type { CartItem } from '../../core/cart/cart.types';
 import { getCartTotal } from '../../core/cart/cart.utils';
 import { CartEmptyState } from './CartEmptyState';
 import { CartItemRow } from './CartItemRow';
+import { Button } from '@app/button';
 
 type CartDrawerProps = {
 	isOpen: boolean;
@@ -24,6 +25,11 @@ export function CartDrawer({
 	function goToMenu() {
 		onClose();
 		navigate('/menu');
+	}
+
+	function goToCheckout() {
+		onClose();
+		navigate('/checkout');
 	}
 
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -112,6 +118,10 @@ export function CartDrawer({
 							<span>Totalt</span>
 							<span className='font-bold'>{getCartTotal(items)} kr</span>
 						</div>
+
+						<Button className='w-full' onClick={goToCheckout}>
+							Till checkout
+						</Button>
 					</>
 				)}
 			</aside>
