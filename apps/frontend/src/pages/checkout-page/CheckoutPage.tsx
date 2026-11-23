@@ -19,7 +19,13 @@ export function CheckoutPage() {
 			</div>
 
 			<div className='grid items-start gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]'>
-				<Pamphlet title='Din beställning'>
+				<Pamphlet
+					title='Din beställning'
+					headerAside={
+						<span className='shrink-0 text-xs font-bold uppercase'>
+							2 varor
+						</span>
+					}>
 					<p>Här lägger vi beställningsraderna</p>
 				</Pamphlet>
 
