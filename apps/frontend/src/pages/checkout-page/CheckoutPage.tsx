@@ -37,6 +37,7 @@ export function CheckoutPage() {
 								key={item.id}
 								item={item}
 								onQuantityChange={changeQuantity}
+								showRemove
 							/>
 						))}
 					</ul>

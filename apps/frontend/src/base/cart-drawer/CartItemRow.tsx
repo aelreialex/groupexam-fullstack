@@ -8,12 +8,14 @@ type CartItemRowProps = {
 	item: CartItem;
 	onQuantityChange: (id: string, quantity: number) => void;
 	children?: ReactNode;
+	showRemove?: boolean;
 };
 
 export function CartItemRow({
 	item,
 	onQuantityChange,
 	children,
+	showRemove = false,
 }: CartItemRowProps) {
 	const selectedIngredients = [
 		...item.selectedExtras,
@@ -43,6 +45,15 @@ export function CartItemRow({
 						onChange={(quantity) => onQuantityChange(item.id, quantity)}
 						max={item.product.category === 'drink' ? MAX_DRINK_QUANTITY : 99}
 					/>
+
+					{showRemove && (
+						<button
+							type='button'
+							onClick={() => onQuantityChange(item.id, 0)}
+							className='mx-auto mt-2 block cursor-pointer text-xs font-bold text-brand-primary underline underline-offset-2 focus:visible:ouline-2 focus:visible:ouline-offset-4 focus-visible:outline-border-strong'>
+							Ta bort
+						</button>
+					)}
 				</div>
 			</div>
 
