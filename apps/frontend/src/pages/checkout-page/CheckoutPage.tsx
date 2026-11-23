@@ -2,10 +2,15 @@ import { Section } from '@app/section';
 import { SectionTitle } from '@app/section-title';
 import { Pamphlet } from '@app/pamphlet';
 import { Button } from '@app/button';
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import { CartItemRow } from '@app/cart-drawer';
 import { ProductOptions } from '@app/product-card';
 import type { CartItem } from '../../core/cart/cart.types';
+import {
+	MAX_EXTRAS_PER_MEAL,
+	MAX_CONDIMENTS_PER_MEAL,
+} from '../../core/cart/cart.constants';
+import { getUnitPrice } from '../../core/cart/cart.utils';
 
 const previewProduct: CartItem['product'] = {
 	_id: 'preview-meal',
@@ -61,6 +66,45 @@ const previewItem: CartItem = {
 
 export function CheckoutPage() {
 	const optionsId = useId();
+	const [quantity, setQuantity] = useState(previewItem.quantity);
+	const [selectedExtraIds, setSelectedExtraIds] = useState(
+		previewItem.selectedExtras.map((extra) => extra._id),
+	);
+
+	const [selectedCondimentIds, setSelectedCondimentIds] = useState(
+		previewItem.selectedCondiments.map((condiment) => condiment._id),
+	);
+
+	const currentItem: CartItem = {
+		...previewItem,
+		quantity,
+		selectedExtras: previewProduct.extras.filter((extra) =>
+			selectedExtraIds.includes(extra._id),
+		),
+		selectedCondiments: previewProduct.condiments.filter((condiment) =>
+			selectedCondimentIds.includes(condiment._id),
+		),
+	};
+
+	function toggleExtra(id: string) {
+		setSelectedExtraIds((ids) => {
+			if (ids.includes(id)) {
+				return ids.filter((selectedId) => selectedId !== id);
+			}
+
+			return ids.length < MAX_EXTRAS_PER_MEAL ? [...ids, id] : ids;
+		});
+	}
+
+	function toggleCondiment(id: string) {
+		setSelectedCondimentIds((ids) => {
+			if (ids.includes(id)) {
+				return ids.filter((selectedId) => selectedId !== id);
+			}
+
+			return ids.length < MAX_CONDIMENTS_PER_MEAL ? [...ids, id] : ids;
+		});
+	}
 	return (
 		<Section>
 			<div className='mb-8 space-y-3'>
@@ -77,28 +121,29 @@ export function CheckoutPage() {
 				<Pamphlet
 					title='Din beställning'
 					headerAside={
-						<span className='shrink-0 text-xs font-bold uppercase'>1 vara</span>
+						<span className='shrink-0 text-xs font-bold uppercase'>
+							{quantity} {quantity === 1 ? 'vara' : 'varor'}
+						</span>
 					}>
 					<ul>
-						<CartItemRow item={previewItem} onQuantityChange={() => {}}>
+						<CartItemRow
+							item={currentItem}
+							onQuantityChange={(_, nextQuantity) => setQuantity(nextQuantity)}>
 							<p className='mb-2 text-xs font-bold uppercase text-brand-primary'>
 								Tillval
 							</p>
 
 							<ProductOptions
-								product={previewItem.product}
+								product={currentItem.product}
 								alwaysExpanded
 								isExpanded
 								extrasId={optionsId}
 								onToggleExpanded={() => {}}
-								selectedExtraIds={previewItem.selectedExtras.map(
-									(extra) => extra._id,
-								)}
-								selectedCondimentIds={previewItem.selectedCondiments.map(
-									(condiment) => condiment._id,
-								)}
-								toggleExtra={() => {}}
-								toggleCondiment={() => {}}></ProductOptions>
+								selectedExtraIds={selectedExtraIds}
+								selectedCondimentIds={selectedCondimentIds}
+								toggleExtra={toggleExtra}
+								toggleCondiment={toggleCondiment}
+							/>
 						</CartItemRow>
 					</ul>
 				</Pamphlet>
@@ -108,7 +153,7 @@ export function CheckoutPage() {
 						<div className='flex items-baseline justify-between gap-4'>
 							<span className='font-bold'>Totalt</span>
 							<span className='font-alfa-slab-one text-2xl text-brand-primary'>
-								94 kr
+								{getUnitPrice(currentItem) * currentItem.quantity} kr
 							</span>
 						</div>
 
