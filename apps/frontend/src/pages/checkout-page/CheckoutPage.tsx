@@ -2,6 +2,7 @@ import { Section } from '@app/section';
 import { SectionTitle } from '@app/section-title';
 import { Pamphlet } from '@app/pamphlet';
 import { Button } from '@app/button';
+//import { ProductOptions } from '@app/product-card';
 //import { Counter } from '@app/counter';
 //import { CartItemRow } from '@app/cartItemRow';
 
