@@ -2,9 +2,10 @@ import { Section } from '@app/section';
 import { SectionTitle } from '@app/section-title';
 import { Pamphlet } from '@app/pamphlet';
 import { Button } from '@app/button';
-//import { ProductOptions } from '@app/product-card';
-//import { Counter } from '@app/counter';
-//import { CartItemRow } from '@app/cartItemRow';
+import { useId } from 'react';
+import { CartItemRow } from '@app/cart-drawer';
+import { ProductOptions } from '@app/product-card';
+import type { CartItem } from '../../core/cart/cart.types';
 
 export function CheckoutPage() {
 	return (
