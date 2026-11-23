@@ -6,6 +6,7 @@ import StaffLayout from './layouts/StaffLayout';
 import { CartProvider } from './core/cart/CartProvider';
 import { HomePage } from '@app/home-page';
 import { MenuPage } from '@app/menu-page';
+import { CheckoutPage } from '@app/checkout-page';
 import { StaffOrdersPage } from '@app/staff-orders-page';
 
 const router = createBrowserRouter([
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
 			{
 				path: '/menu',
 				element: <MenuPage />,
+			},
+			{
+				path: '/checkout',
+				element: <CheckoutPage />,
 			},
 		],
 	},
