@@ -7,6 +7,7 @@ import { CartProvider } from './core/cart/CartProvider';
 import { HomePage } from '@app/home-page';
 import { MenuPage } from '@app/menu-page';
 import { CheckoutPage } from '@app/checkout-page';
+import { PaymentResultPage } from '@app/payment-result-page';
 import { StaffOrdersPage } from '@app/staff-orders-page';
 
 const router = createBrowserRouter([
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
 			{
 				path: '/checkout',
 				element: <CheckoutPage />,
+			},
+			{
+				path: '/checkout/success',
+				element: <PaymentResultPage status='success' />,
+			},
+			{
+				path: '/checkout/cancel',
+				element: <PaymentResultPage status='cancel' />,
 			},
 		],
 	},
