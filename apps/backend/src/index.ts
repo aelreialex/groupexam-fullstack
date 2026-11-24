@@ -1,15 +1,14 @@
+import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
-import menuRouter from "./routes/menu.route"
-import authRouter from "./routes/auth.routes"
+import menuRouter from "./routes/menu.route";
+import ordersRouter from "./routes/orders.route";
+import authRouter from "./routes/auth.routes";
 
 // config
-
-dotenv.config();
 const test = process.env.CONNECTION_STRING;
 
 if (!test) {
@@ -61,7 +60,8 @@ app.use(cookieParser());
 //routes
 
 app.use("/api/menu", menuRouter);
-app.use("/api/auth", authRouter)
+app.use("/api/orders", ordersRouter);
+app.use("/api/auth", authRouter);
 
 // database connection and port
 database.on("error", (error) => console.log(error));
