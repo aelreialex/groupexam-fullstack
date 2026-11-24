@@ -1,7 +1,7 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import CustomerLayout from './layouts/CustomerLayout';
-import StaffLayout from './layouts/StaffLayout';
+import CustomerLayout from "./layouts/CustomerLayout";
+import StaffLayout from "./layouts/StaffLayout";
 
 import { CartProvider } from './core/cart/CartProvider';
 import { HomePage } from '@app/home-page';
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
 ]);
 
 function Router() {
-	return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 }
 
 export default Router;
