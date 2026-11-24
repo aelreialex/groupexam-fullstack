@@ -5,6 +5,7 @@ import { getCartTotal } from "../../core/cart/cart.utils";
 import { CartEmptyState } from "./CartEmptyState";
 import { CartItemRow } from "./CartItemRow";
 import { useCartStore } from "../../core/cart/cart.store";
+import { Button } from "@app/button";
 
 type CartDrawerProps = {
   isOpen: boolean;
@@ -16,19 +17,17 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const onQuantityChange = useCartStore((state) => state.changeQuantity);
 
   const navigate = useNavigate();
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-	function goToCheckout() {
-		onClose();
-		navigate('/checkout');
-	}
+  function goToCheckout() {
+    onClose();
+    navigate("/checkout");
+  }
 
-	const closeButtonRef = useRef<HTMLButtonElement>(null);
   function goToMenu() {
     onClose();
     navigate("/menu");
   }
-
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -60,27 +59,28 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
       className={`fixed inset-0 z-50 ${isOpen ? "" : "pointer-events-none"}`}
     >
       <div
-        className={`absolute inset-0 bg-black/50 motion-safe:transition-opacity motion-safe:duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 bg-black/50 motion-safe:transition-opacity motion-safe:duration-300 ${
+          isOpen ? "opacity-100" : "opacity-0"
+        }`}
         onClick={onClose}
       />
 
       <aside
         className={`
-            absolute inset-y-0 right-0
-            w-full max-w-sm overflow-y-auto
-            border-l border-border-strong 
-            bg-bg-surface p-6
-            motion-safe:transition-transform motion-safe:duration-300
-            ease-in-out
-            ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          absolute inset-y-0 right-0
+          w-full max-w-sm overflow-y-auto
+          border-l border-border-strong
+          bg-bg-surface p-6
+          motion-safe:transition-transform motion-safe:duration-300
+          ease-in-out
+          ${isOpen ? "translate-x-0" : "translate-x-full"}
+        `}
       >
         <div
           className="
-                flex
-                items-center justify-between
-                gap-4
-                border-b border-border-strong
-                pb-4"
+            flex items-center justify-between
+            gap-4 border-b border-border-strong pb-4
+          "
         >
           <h2 className="font-alfa-slab-one text-2xl text-brand-primary">
             Din beställning
@@ -111,20 +111,17 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               ))}
             </ul>
 
-            <div
-              className="
-                        flex items-center justify-between border-t border-border-subtle
-                        py-4'>
-							<span>Totalt</span>
-							<span className='font-bold'>{getCartTotal(items)} kr</span>
-						</div>
+            <div className="flex items-center justify-between border-t border-border-subtle py-4">
+              <span>Totalt</span>
+              <span className="font-bold">{getCartTotal(items)} kr</span>
+            </div>
 
-						<Button className='w-full' onClick={goToCheckout}>
-							Till checkout
-						</Button>
-					</>
-				)}
-			</aside>
-		</div>
-	);
+            <Button className="w-full" onClick={goToCheckout}>
+              Till checkout
+            </Button>
+          </>
+        )}
+      </aside>
+    </div>
+  );
 }
