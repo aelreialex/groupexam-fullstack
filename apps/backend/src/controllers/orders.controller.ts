@@ -13,7 +13,7 @@ export const createOrder = async (
 
 	return res.json({
 		success: true,
-		message: "Lyckat anrop",
+		message: "Lyckades att skapa order",
 		data: order,
 	});
 };
