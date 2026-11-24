@@ -11,7 +11,7 @@ export function Footer() {
       <div
         className={`
           mx-auto flex max-w-6xl flex-col justify-between gap-6
-          px-4 py-2 sm:flex-row sm:items-center
+          p-4 sm:flex-row sm:items-center
         `}
       >
         <img src={logo} alt="Nisses Korvmoj" className="w-32" />

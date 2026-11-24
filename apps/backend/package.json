@@ -5,14 +5,18 @@
 	"type": "module",
 	"scripts": {
 		"dev": "tsx watch src/index.ts",
+		"build": "tsup",
+		"start": "node dist/index.js",
 		"typecheck": "tsc --noEmit",
 		"seedIngredients": "tsx src/scripts/ingredientSeedingScript.ts",
 		"seedProducts": "tsx src/scripts/productSeedingScript.ts",
 		"fetchProducts": "tsx src/scripts/fetchPopulatedProducts.ts",
-		"fetchIngredients": "tsx src/scripts/fetchIngredientsScript.ts"
+		"fetchIngredients": "tsx src/scripts/fetchIngredientsScript.ts",
+		"seedUsers": "tsx src/scripts/userSeedingScript.ts"
 	},
 	"dependencies": {
 		"@app/shared": "*",
+		"@types/bcrypt": "^6.0.0",
 		"@types/cookie-parser": "^1.4.10",
 		"bcrypt": "^6.0.0",
 		"cookie-parser": "^1.4.7",
@@ -30,6 +34,7 @@
 		"@types/http-errors": "^2.0.5",
 		"@types/jsonwebtoken": "^9.0.10",
 		"@types/node": "^26.6.6",
+		"tsup": "^9.0.0",
 		"tsx": "^4.23.15"
 	}
 }

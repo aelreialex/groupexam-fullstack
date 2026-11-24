@@ -1,90 +1,79 @@
-import { createProductSchema } from '@app/shared';
-import { ProductCard } from '@app/product-card';
-import korvImage from '../../assets/korv-m-brod.png';
-import { Pamphlet } from '@app/pamphlet';
+import type { Menu, Product } from "@app/shared";
+import { useOutletContext } from "react-router-dom";
+import { useCartStore } from "../../core/cart/cart.store";
 
-const exampleProduct = createProductSchema.parse({
-	_id: 'meal-1',
-	name: 'Grillad korv med bröd',
-	price: 30,
-	description:
-		'Ordentligt grillad i mjukt bröd, med senap, ketchup och rostad lök.',
-	nisseQuote: 'Lite stökig. Precis som det ska vara.',
-	sortOrder: 0,
-	ingredients: [
-		{
-			_id: 'ingredient-bread',
-			name: 'Korvbröd',
-			role: 'base',
-		},
-		{
-			_id: 'ingredient-sausage',
-			name: 'Grillkorv',
-			role: 'sausage',
-		},
-	],
-	extras: [
-		{
-			_id: 'extra-onion',
-			name: 'Extra rostad lök',
-			role: 'topping',
-			price: 5,
-			isCustomizable: true,
-		},
-		{
-			_id: 'extra-salad',
-			name: 'Extra räksallad',
-			role: 'topping',
-			price: 10,
-			isCustomizable: true,
-		},
-	],
-});
+import { ProductCard } from "@app/product-card";
+import { ProductCardGrid } from "@app/product-card-grid";
+import { Pamphlet } from "@app/pamphlet";
+import { Section } from "@app/section";
+import { SectionTitle } from "@app/section-title";
+import { DrinkRow } from "@app/drink-row";
 
 export function MenuPage() {
-	return (
-		<div className='mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8'>
-			<div
-				className='
-		grid grid-cols-1
-		items-start
-		gap-6
-		md:grid-cols-2
-		lg:grid-cols-3'>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-				<ProductCard
-					product={exampleProduct}
-					imageSrc={korvImage}
-					imageAlt='Grillad korv med bröd'
-				/>
-			</div>
-			<div className='mt-8'>
-				<Pamphlet title='Att dricka' children={null} />
-			</div>
-		</div>
-	);
+  const menu = useOutletContext<Menu | undefined>();
+
+  const items = useCartStore((state) => state.items);
+  const addItem = useCartStore((state) => state.addItem);
+  const changeQuantity = useCartStore((state) => state.changeQuantity);
+
+  function getDrinkQuantity(productId: string) {
+    return items.find((item) => item.product._id === productId)?.quantity ?? 0;
+  }
+
+  function handleDrinkQuantityChange(drink: Product, quantity: number) {
+    const item = items.find((item) => item.product._id === drink._id);
+
+    if (item) {
+      changeQuantity(item.id, quantity);
+    } else if (quantity > 0 && drink.inStock) {
+      addItem(drink);
+    }
+  }
+
+  return (
+    <Section>
+      <div className="mb-6 space-y-3">
+        <SectionTitle as="h1" eyebrow="Korv, mos och annat viktigt">
+          Menyn
+        </SectionTitle>
+
+        <p className="font-kalam">
+          Den har inte ändrats mycket sen -71. Varför skulle den?
+        </p>
+      </div>
+      <ProductCardGrid>
+        {menu?.meals.map((meal) => (
+          <ProductCard
+            key={meal._id}
+            product={meal}
+            imageSrc={meal.image}
+            imageAlt={meal.name}
+          />
+        ))}
+      </ProductCardGrid>
+      <div className="mt-8">
+        <Pamphlet
+          title="Att dricka"
+          contentClassName="mx-auto w-full max-w-2xl"
+        >
+          <div className="space-y-3">
+            <p className="text-sm text-text-secondary">
+              Läggs till separat i din beställning.
+            </p>
+          </div>
+
+          {menu?.drinks.map((drink) => (
+            <DrinkRow
+              key={drink._id}
+              product={drink}
+              quantity={getDrinkQuantity(drink._id)}
+              onQuantityChange={(quantity) =>
+                handleDrinkQuantityChange(drink, quantity)
+              }
+            />
+          ))}
+        </Pamphlet>
+      </div>
+    </Section>
+  );
 }

@@ -1,0 +1,6 @@
+{
+	"name": "@app/drink-row",
+	"private": true,
+	"type": "module",
+	"exports": "./index.ts"
+}

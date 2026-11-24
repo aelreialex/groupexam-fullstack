@@ -6,6 +6,7 @@ import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
 import menuRouter from "./routes/menu.route";
 import ordersRouter from "./routes/orders.route";
+import authRouter from "./routes/auth.routes";
 
 // config
 const test = process.env.CONNECTION_STRING;
@@ -21,20 +22,46 @@ const PORT = process.env.PORT || 8080;
 
 const app = express();
 
+const frontendAdress = process.env.FRONTEND_ADDRESS;
+
 // middlewares
 app.use(express.json());
+// app.use(
+// 	cors({
+// 		origin: frontendAdress,
+// 		credentials: true,
+// 	}),
+// );
+
+const allowedOrigins = [
+	frontendAdress?.replace(/\/$/, ""),
+	"http://localhost:5173",
+].filter(Boolean);
+
 app.use(
 	cors({
-		origin: `http://localhost:5173`,
+		origin: (origin, callback) => {
+			if (
+				!origin ||
+				allowedOrigins.includes(origin) ||
+				origin.endsWith(".vercel.app")
+			) {
+				callback(null, true);
+			} else {
+				callback(new Error("Not allowed by CORS"));
+			}
+		},
 		credentials: true,
 	}),
 );
+
 app.use(cookieParser());
 
 //routes
 
 app.use("/api/menu", menuRouter);
 app.use("/api/orders", ordersRouter);
+app.use("/api/auth", authRouter);
 
 // database connection and port
 database.on("error", (error) => console.log(error));
