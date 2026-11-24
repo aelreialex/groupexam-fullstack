@@ -35,7 +35,7 @@ export const registerUser = async (req: Request<{}, {}, RegisterRequestBody>, re
     });
 };
 
-export const loginUser = async (req: Request<{}, {}, LoginRequestBody>, res: Response, next: NextFunction): Promise<void> => {
+export const loginUser = async (req: Request<{}, {}, LoginRequestBody>, res: Response, _next: NextFunction): Promise<void> => {
 
     // if (!req.body.username || !req.body.password) {
     //     return next({
