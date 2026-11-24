@@ -28,7 +28,7 @@ export function Pamphlet({
 						: variant === 'order'
 							? 'overflow-hidden rounded-md border border-border-subtle shadow-[0_6px_10px_-2px_var(--color-border-strong)]'
 							: variant === 'result'
-								? 'p-g sm:p-10 border-2 border-border-pamphlet shadow-[6px_6px_0_var(--color-border-strong)]'
+								? 'p-6 sm:p-10 border-2 border-border-pamphlet shadow-[6px_6px_0_var(--color-border-strong)]'
 								: 'p-8 border-4 border-border-pamphlet shadow-[0_10px_24px_-14px_#382b22]'
 				}
       `}>
