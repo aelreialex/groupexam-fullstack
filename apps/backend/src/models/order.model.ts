@@ -38,6 +38,10 @@ const itemSnapshotSchema = new Schema<ItemSnapshot>({
 		type: String,
 		required: true,
 	},
+	basePrice: {
+		type: Number,
+		required: true,
+	},
 	quantity: {
 		type: Number,
 		required: true,
@@ -78,7 +82,7 @@ const orderSchema = new Schema<MongooseOrder>(
 		},
 		customerName: {
 			type: String,
-			required: true,
+			required: false,
 		},
 		customerEmail: {
 			type: String,

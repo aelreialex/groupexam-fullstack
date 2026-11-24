@@ -9,11 +9,11 @@ export const createOrder = async (
 ) => {
 	const body: CreateOrder = req.body;
 
-    const result = await ordersService.createOrder(body);
+	const order = await ordersService.createOrder(body);
 
 	return res.json({
 		success: true,
 		message: "Lyckat anrop",
-		data: ,
+		data: order,
 	});
 };

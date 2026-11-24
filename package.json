@@ -16,8 +16,5 @@
 	"devDependencies": {
 		"concurrently": "^10.0.7",
 		"typescript": "^7.0.2"
-	},
-	"dependencies": {
-		"stripe": "^23.2.0"
 	}
 }

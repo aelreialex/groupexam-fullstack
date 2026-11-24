@@ -27,8 +27,8 @@ export const orderItemSchema = z.object({
 // export const customOrderItemSchema later with type "custom" for build own hotdog feature
 
 export const createOrderSchema = z.object({
-	customerName: z.string(),
-	customerEmail: z.email("Invalid email format").optional(),
+	// customerName: z.string(), // both comes from stripe instead
+	// customerEmail: z.email("Invalid email format").optional(),
 	// notes: z.string().trim().max(300).optional(),
 	cart: z.array(orderItemSchema).min(1, "Order must have at least 1 item"),
 });
@@ -47,6 +47,7 @@ export const itemSnapshotSchema = z.object({
 	type: z.enum(["product", "custom"]),
 	productId: z.string().optional(),
 	name: z.string(),
+	basePrice: z.number().min(0),
 	quantity: z.number().int().min(1),
 	baseIngredients: z.array(ingredientSnapshotSchema).default([]),
 	extras: z.array(ingredientSnapshotSchema).default([]),
@@ -59,9 +60,8 @@ export const itemSnapshotSchema = z.object({
 export const orderSchema = z.object({
 	_id: z.string(),
 	orderNumber: z.number().int().min(1),
-	customerName: z.string(),
+	customerName: z.string().optional(),
 	customerEmail: z.email().optional(),
-	// notes: z.string().max(300).optional(),
 	price: z.number().int().min(0),
 	cart: z.array(itemSnapshotSchema).min(1),
 	status: ORDER_STATUSES,
