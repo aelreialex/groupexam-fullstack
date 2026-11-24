@@ -5,6 +5,7 @@ import { Button } from '@app/button';
 import { CartItemRow } from '@app/cart-drawer';
 import { useCart } from '../../core/cart/CartProvider';
 import { getCartTotal } from '../../core/cart/cart.utils';
+import stripeLogo from '../../assets/images/stripe-logo.png';
 
 export function CheckoutPage() {
 	const { items, changeQuantity } = useCart();
@@ -26,6 +27,7 @@ export function CheckoutPage() {
 			<div className='grid items-start gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]'>
 				<Pamphlet
 					title='Din beställning'
+					variant='order'
 					headerAside={
 						<span className='shrink-0 text-xs font-bold uppercase'>
 							{quantity} {quantity === 1 ? 'vara' : 'varor'}
@@ -53,6 +55,17 @@ export function CheckoutPage() {
 						</div>
 
 						<Button className='w-full'>Fortsätt till betalning</Button>
+
+						<div className='flex items-center gap-3'>
+							<img
+								src={stripeLogo}
+								alt='Stripe'
+								className='h-9 w-auto shrink-0'
+							/>
+							<p className='text-xs leading-relaxed text-text-secpndary'>
+								Du skickas vidare till Stripes säkra betalningssida.
+							</p>
+						</div>
 					</div>
 				</Pamphlet>
 			</div>

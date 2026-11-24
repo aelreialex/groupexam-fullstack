@@ -6,7 +6,7 @@ type PamphletProps = {
 	children: ReactNode;
 	contentClassName?: string;
 	headerAside?: ReactNode;
-	variant?: 'default' | 'summary';
+	variant?: 'default' | 'summary' | 'order';
 };
 
 export function Pamphlet({
@@ -20,17 +20,21 @@ export function Pamphlet({
 	return (
 		<article
 			className={`
-        p-8 bg-bg-surface
+				bg-bg-surface
         ${rotate ? 'rotate-2' : ''}
         ${
 					variant === 'summary'
-						? 'rounded-sm border-2 border-border-pamphlet shadow-[5px_5px_0_var(--color-border-strong)]'
-						: 'border-4 border-border-pamphlet shadow-[0_10px_24px_-14px_#382b22]'
+						? 'p-8 rounded-sm border-2 border-border-pamphlet shadow-[5px_5px_0_var(--color-border-strong)]'
+						: variant === 'order'
+							? 'overflow-hidden rounded-md border border-border-subtle shadow-[0_6px_10px_-2px_var(--color-border-strong)]'
+							: 'p-8 border-4 border-border-pamphlet shadow-[0_10px_24px_-14px_#382b22]'
 				}
       `}>
-			<div className={`flex flex-col gap-4 ${contentClassName ?? ''}`}>
+			<div
+				className={`flex flex-col ${variant === 'order' ? 'gap-0' : 'gap-4'} ${contentClassName ?? ''}`}>
 				{headerAside != null ? (
-					<div className='flex items-center justify-between gap-4'>
+					<div
+						className={`flex items-center justify-between gap-4 ${variant === 'order' ? 'border-b-2 border-border-subtle px-5 py-4' : ''}`}>
 						<h2 className='font-alfa-slab-one text-lg text-brand-primary'>
 							{title}
 						</h2>
@@ -43,7 +47,9 @@ export function Pamphlet({
 					</h2>
 				)}
 
-				<section>{children}</section>
+				<section className={variant === 'order' ? 'px-5 pb-4' : undefined}>
+					{children}
+				</section>
 			</div>
 		</article>
 	);
