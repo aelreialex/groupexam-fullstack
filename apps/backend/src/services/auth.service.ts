@@ -3,14 +3,13 @@ import type { RegisterRequestBody, LoginRequestBody } from "../controllers/auth.
 import * as userService from "../services/user.service";
 import { hashPassword, matchPassword } from "../utils/bcrypt.utils";
 import { signToken } from "../utils/jwt.utils";
+import createError from 'http-errors';
 
 export const registerUser = async (user: RegisterRequestBody) => {
     const existingUser = await userService.getUser(user.username);
 
     if (existingUser.user) {
-            const error = new Error("Username already exists") as Error & { status?: number };
-            error.status = 400;
-            throw error;
+            throw createError(400, "Användarnamn upptaget")
         }
 
     const hashedPassword = await hashPassword(user.password);
@@ -31,17 +30,13 @@ export const loginUser = async (user: LoginRequestBody) => {
     const existingUser = await userService.getUser(user.username);
 
         if (!existingUser.user) {
-            const error = new Error("Username or Password is incorrect") as Error & { status?: number };
-            error.status = 401;
-            throw error;
+            throw createError(401, "Användarnamn eller lösenord är incorrect")
         }
 
         const correctPassword = await matchPassword(user.password, existingUser.user.password)
 
         if(!correctPassword) {
-            const error = new Error("Username or Password is incorrect") as Error & { status?: number };
-            error.status = 401;
-            throw error;
+            throw createError(401, "Användarnamn eller lösenord är incorrect")
         }
 
         const token = signToken({

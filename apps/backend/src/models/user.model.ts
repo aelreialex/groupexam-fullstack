@@ -2,7 +2,7 @@ import { Schema, model} from "mongoose"
 import { type User } from "@app/shared";
 
 
-const userSchema = new Schema<Omit<User, "_id">>({
+const userSchema = new Schema<User>({
     username: {
         type: String,
         required: true,

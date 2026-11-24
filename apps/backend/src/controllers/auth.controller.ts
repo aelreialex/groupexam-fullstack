@@ -12,7 +12,15 @@ export interface LoginRequestBody {
     password: string;
 }
 
-export const registerUser = async (req: Request<{}, {}, RegisterRequestBody>, res: Response, _next: NextFunction): Promise<void> => {
+export const registerUser = async (req: Request<{}, {}, RegisterRequestBody>, res: Response, next: NextFunction): Promise<void> => {
+
+
+    if (!req.body.username || !req.body.password) {
+            return next({
+                status: 400,
+                message: "Användarnamn och lösenord måste vara ifyllda",
+            });
+        }
 
     const result = await authService.registerUser({
         username: req.body.username,
@@ -22,12 +30,20 @@ export const registerUser = async (req: Request<{}, {}, RegisterRequestBody>, re
 
     res.status(201).json({
         success: true,
-        message: "User registered successfully",
+        message: "Användaren registrerad",
         user: result.user
     });
 };
 
-export const loginUser = async (req: Request<{}, {}, LoginRequestBody>, res: Response, _next: NextFunction): Promise<void> => {
+export const loginUser = async (req: Request<{}, {}, LoginRequestBody>, res: Response, next: NextFunction): Promise<void> => {
+
+    // if (!req.body.username || !req.body.password) {
+    //     return next({
+    //         status: 400,
+    //         message: "Användarnamn och lösenord måste vara ifyllda",
+    //     });
+    // }
+
     const result = await authService.loginUser({
         username: req.body.username,
         password: req.body.password
