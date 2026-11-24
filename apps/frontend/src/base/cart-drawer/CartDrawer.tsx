@@ -1,120 +1,121 @@
-import { X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
-import type { CartItem } from '../../core/cart/cart.types';
-import { getCartTotal } from '../../core/cart/cart.utils';
-import { CartEmptyState } from './CartEmptyState';
-import { CartItemRow } from './CartItemRow';
+import { X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { getCartTotal } from "../../core/cart/cart.utils";
+import { CartEmptyState } from "./CartEmptyState";
+import { CartItemRow } from "./CartItemRow";
+import { useCartStore } from "../../core/cart/cart.store";
 
 type CartDrawerProps = {
-	isOpen: boolean;
-	onClose: () => void;
-	items: CartItem[];
-	onQuantityChange: (id: string, quantity: number) => void;
+  isOpen: boolean;
+  onClose: () => void;
 };
 
-export function CartDrawer({
-	isOpen,
-	onClose,
-	items,
-	onQuantityChange,
-}: CartDrawerProps) {
-	const navigate = useNavigate();
+export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
+  const items = useCartStore((state) => state.items);
+  const onQuantityChange = useCartStore((state) => state.changeQuantity);
 
-	function goToMenu() {
-		onClose();
-		navigate('/menu');
-	}
+  const navigate = useNavigate();
 
-	const closeButtonRef = useRef<HTMLButtonElement>(null);
+  function goToMenu() {
+    onClose();
+    navigate("/menu");
+  }
 
-	useEffect(() => {
-		if (!isOpen) return;
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-		const previousFocus = document.activeElement;
+  useEffect(() => {
+    if (!isOpen) return;
 
-		closeButtonRef.current?.focus();
+    const previousFocus = document.activeElement;
 
-		function handleKeyDown(event: KeyboardEvent) {
-			if (event.key === 'Escape') {
-				onClose();
-			}
-		}
+    closeButtonRef.current?.focus();
 
-		document.addEventListener('keydown', handleKeyDown);
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    }
 
-		return () => {
-			document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
-			if (previousFocus instanceof HTMLElement) {
-				previousFocus.focus();
-			}
-		};
-	}, [isOpen, onClose]);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
 
-	return (
-		<div
-			inert={!isOpen}
-			className={`fixed inset-0 z-50 ${isOpen ? '' : 'pointer-events-none'}`}>
-			<div
-				className={`absolute inset-0 bg-black/50 motion-safe:transition-opacity motion-safe:duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
-				onClick={onClose}
-			/>
+      if (previousFocus instanceof HTMLElement) {
+        previousFocus.focus();
+      }
+    };
+  }, [isOpen, onClose]);
 
-			<aside
-				className={`
+  return (
+    <div
+      inert={!isOpen}
+      className={`fixed inset-0 z-50 ${isOpen ? "" : "pointer-events-none"}`}
+    >
+      <div
+        className={`absolute inset-0 bg-black/50 motion-safe:transition-opacity motion-safe:duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}
+        onClick={onClose}
+      />
+
+      <aside
+        className={`
             absolute inset-y-0 right-0
             w-full max-w-sm overflow-y-auto
             border-l border-border-strong 
             bg-bg-surface p-6
             motion-safe:transition-transform motion-safe:duration-300
             ease-in-out
-            ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-				<div
-					className='
+            ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <div
+          className="
                 flex
                 items-center justify-between
                 gap-4
                 border-b border-border-strong
-                pb-4'>
-					<h2 className='font-alfa-slab-one text-2xl text-brand-primary'>
-						Din beställning
-					</h2>
+                pb-4"
+        >
+          <h2 className="font-alfa-slab-one text-2xl text-brand-primary">
+            Din beställning
+          </h2>
 
-					<button
-						type='button'
-						ref={closeButtonRef}
-						onClick={onClose}
-						aria-label='Stäng varukorgen'
-						className='cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-border-strong'>
-						<X size={20} aria-hidden='true' />
-					</button>
-				</div>
+          <button
+            type="button"
+            ref={closeButtonRef}
+            onClick={onClose}
+            aria-label="Stäng varukorgen"
+            className="cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-border-strong"
+          >
+            <X size={20} aria-hidden="true" />
+          </button>
+        </div>
 
-				{items.length === 0 ? (
-					<CartEmptyState onGoToMenu={goToMenu} />
-				) : (
-					<>
-						<ul className='divide-y divide-dashed divide-border-subtle'>
-							{items.map((item) => (
-								<CartItemRow
-									key={item.id}
-									item={item}
-									onQuantityChange={onQuantityChange}
-								/>
-							))}
-						</ul>
+        {items.length === 0 ? (
+          <CartEmptyState onGoToMenu={goToMenu} />
+        ) : (
+          <>
+            <ul className="divide-y divide-dashed divide-border-subtle">
+              {items.map((item) => (
+                <CartItemRow
+                  key={item.id}
+                  item={item}
+                  onQuantityChange={onQuantityChange}
+                />
+              ))}
+            </ul>
 
-						<div
-							className='
+            <div
+              className="
                         flex items-center justify-between border-t border-border-subtle
-                        py-4'>
-							<span>Totalt</span>
-							<span className='font-bold'>{getCartTotal(items)} kr</span>
-						</div>
-					</>
-				)}
-			</aside>
-		</div>
-	);
+                        py-4"
+            >
+              <span>Totalt</span>
+              <span className="font-bold">{getCartTotal(items)} kr</span>
+            </div>
+          </>
+        )}
+      </aside>
+    </div>
+  );
 }
