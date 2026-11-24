@@ -11,10 +11,12 @@
 		"seedIngredients": "tsx src/scripts/ingredientSeedingScript.ts",
 		"seedProducts": "tsx src/scripts/productSeedingScript.ts",
 		"fetchProducts": "tsx src/scripts/fetchPopulatedProducts.ts",
-		"fetchIngredients": "tsx src/scripts/fetchIngredientsScript.ts"
+		"fetchIngredients": "tsx src/scripts/fetchIngredientsScript.ts",
+		"seedUsers": "tsx src/scripts/userSeedingScript.ts"
 	},
 	"dependencies": {
 		"@app/shared": "*",
+		"@types/bcrypt": "^6.0.0",
 		"@types/cookie-parser": "^1.4.10",
 		"bcrypt": "^6.0.0",
 		"cookie-parser": "^1.4.7",
