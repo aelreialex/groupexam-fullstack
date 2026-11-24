@@ -5,6 +5,7 @@ import { Button } from '@app/button';
 import { CartItemRow } from '@app/cart-drawer';
 import { useCart } from '../../core/cart/CartProvider';
 import { getCartTotal } from '../../core/cart/cart.utils';
+import { Link } from 'react-router-dom';
 import stripeLogo from '../../assets/images/stripe-logo.png';
 
 export function CheckoutPage() {
@@ -43,6 +44,11 @@ export function CheckoutPage() {
 							/>
 						))}
 					</ul>
+					<Link
+						to='/menu'
+						className='mt-4 inline-block text-xs font-bold hover:underline focus:visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-border-strong'>
+						Lägg till något mer
+					</Link>
 				</Pamphlet>
 
 				<Pamphlet title='Att betala' variant='summary'>
