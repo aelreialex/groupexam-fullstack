@@ -51,9 +51,8 @@ export const loginUser = async (req: Request<{}, {}, LoginRequestBody>, res: Res
 
     res.cookie("token", result.token, {
         httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-        maxAge: 60 * 60 * 1000, 
+        secure: true, // om vi kör localhost kom ihåg att denna kan krocka pga http och inte https
+        maxAge: 24 * 60 * 60 * 1000, 
     });
 
     res.status(200).json({

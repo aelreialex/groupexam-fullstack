@@ -11,7 +11,6 @@ const getJwtSecret = (): string => {
     return secret;
 }
 
-
 export const signToken = (payload : JwtPayload) => {
     const secret = getJwtSecret();
     const token = jwt.sign(payload, secret, { expiresIn: '1h' });
@@ -24,6 +23,6 @@ export const verifyToken = (token : string) => {
         const decoded = jwt.verify(token, secret);
         return decoded;
     } catch (error) {
-        throw createError(401, 'Invalid token');
+        throw createError(401, 'Ogiltig token');
     }
 }

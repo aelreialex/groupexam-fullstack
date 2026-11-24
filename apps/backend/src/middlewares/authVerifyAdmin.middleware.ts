@@ -18,10 +18,10 @@ export const requireAdmin = (
 
   try {
     const payload = verifyToken(token) as JwtPayload;
-    console.log("Decoded JWT payload:", payload);
+    // console.log("Decoded JWT payload:", payload);
 
     if(typeof payload !== "object" || payload === null || payload.role !== 'admin'){
-      res.status(403).json({ message: "Inte autentiserad för att använda denna funktion – endast admin kan skapa en ny användare i databasen."})
+      res.status(403).json({ message: "Inte autentiserad för att använda denna funktion - endast admin kan skapa en ny användare i databasen."})
       return;
     };
 
