@@ -17,6 +17,12 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
   const navigate = useNavigate();
 
+	function goToCheckout() {
+		onClose();
+		navigate('/checkout');
+	}
+
+	const closeButtonRef = useRef<HTMLButtonElement>(null);
   function goToMenu() {
     onClose();
     navigate("/menu");
@@ -108,14 +114,17 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             <div
               className="
                         flex items-center justify-between border-t border-border-subtle
-                        py-4"
-            >
-              <span>Totalt</span>
-              <span className="font-bold">{getCartTotal(items)} kr</span>
-            </div>
-          </>
-        )}
-      </aside>
-    </div>
-  );
+                        py-4'>
+							<span>Totalt</span>
+							<span className='font-bold'>{getCartTotal(items)} kr</span>
+						</div>
+
+						<Button className='w-full' onClick={goToCheckout}>
+							Till checkout
+						</Button>
+					</>
+				)}
+			</aside>
+		</div>
+	);
 }

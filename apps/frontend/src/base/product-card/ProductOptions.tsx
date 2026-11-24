@@ -13,6 +13,7 @@ type ProductOptionsProps = {
 	selectedCondimentIds: string[];
 	toggleExtra: (id: string) => void;
 	toggleCondiment: (id: string) => void;
+	alwaysExpanded?: boolean;
 };
 
 export function ProductOptions({
@@ -24,15 +25,17 @@ export function ProductOptions({
 	selectedCondimentIds,
 	toggleExtra,
 	toggleCondiment,
+	alwaysExpanded = false,
 }: ProductOptionsProps) {
 	return (
 		<div className='border-y border-dashed border-border-subtle'>
-			<button
-				type='button'
-				aria-expanded={isExpanded}
-				aria-controls={extrasId}
-				onClick={onToggleExpanded}
-				className='
+			{!alwaysExpanded && (
+				<button
+					type='button'
+					aria-expanded={isExpanded}
+					aria-controls={extrasId}
+					onClick={onToggleExpanded}
+					className='
 						flex w-full
 						cursor-pointer
 						items-center justify-between
@@ -41,14 +44,15 @@ export function ProductOptions({
 						focus-visible:outline-2
 						focus-visible:outline-offset-2
 						focus-visible:outline-border-strong'>
-				<span>Välj tillbehör</span>
-				<span aria-hidden='true'>{isExpanded ? '-' : '+'}</span>
-			</button>
+					<span>Välj tillbehör</span>
+					<span aria-hidden='true'>{isExpanded ? '-' : '+'}</span>
+				</button>
+			)}
 
 			<div
 				id={extrasId}
-				hidden={!isExpanded}
-				className='max-h-48 space-y-2 overflow-y-auto pb-3 pr-2'>
+				hidden={!alwaysExpanded && !isExpanded}
+				className={`space-y-2 ${alwaysExpanded ? 'py-3' : 'max-h-48 overflow-y-auto pb-3 pr-2'}`}>
 				{product.extras.map((extra) => (
 					<label key={extra._id} className='flex items-center gap-2 text-sm'>
 						<input
