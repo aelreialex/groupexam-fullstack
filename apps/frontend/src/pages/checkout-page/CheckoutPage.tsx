@@ -3,14 +3,40 @@ import { SectionTitle } from '@app/section-title';
 import { Pamphlet } from '@app/pamphlet';
 import { Button } from '@app/button';
 import { CheckoutItemRow } from './CheckoutItemRow';
-import { getCartTotal } from '../../core/cart/cart.utils';
 import { Link } from 'react-router-dom';
 import stripeLogo from '../../assets/images/stripe-logo.png';
 import { useCartStore } from '../../core/cart/cart.store';
+import { useState } from 'react';
+import { createOrderBody, getCartTotal } from '../../core/cart/cart.utils';
+import { createOrder } from '../../core/orders/orders.api';
 
 export function CheckoutPage() {
 	const items = useCartStore((state) => state.items);
 	const changeQuantity = useCartStore((state) => state.changeQuantity);
+
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+
+	async function handleCheckout() {
+		if (isSubmitting || items.length === 0) return;
+
+		setIsSubmitting(true);
+		setError(null);
+
+		try {
+			const body = createOrderBody(items);
+			const order = await createOrder(body);
+
+			window.location.assign(order.stripeCheckoutURL);
+		} catch (error) {
+			setError(
+				error instanceof Error
+					? error.message
+					: 'Kunde inte starta betalningen. Försök igen.',
+			);
+			setIsSubmitting(false);
+		}
+	}
 
 	const quantity = items.reduce((total, item) => total + item.quantity, 0);
 
@@ -60,7 +86,20 @@ export function CheckoutPage() {
 							</span>
 						</div>
 
-						<Button className='w-full'>Fortsätt till betalning</Button>
+						<Button
+							className='w-full'
+							onClick={handleCheckout}
+							disabled={isSubmitting || items.length === 0}>
+							{isSubmitting
+								? 'Förbereder betalning...'
+								: 'Fortsätt till betalning'}
+						</Button>
+
+						{error && (
+							<p role='alert' className='text-sm text-red-700'>
+								{error}
+							</p>
+						)}
 
 						<div className='flex items-center gap-3'>
 							<img
