@@ -1,6 +1,5 @@
 import { Section } from "@app/section";
 import { SectionTitle } from "@app/section-title";
-import { Button } from "@app/button";
 import { OrderCard } from "./OrderCard";
 
 import { mockOrders } from "./testdata";
