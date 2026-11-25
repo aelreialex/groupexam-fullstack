@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Product } from '@app/shared';
 import type { CartItem } from './cart.types';
-import { MAX_DRINK_QUANTITY } from './cart.constants';
+import { MAX_DRINK_QUANTITY, MAX_MEAL_QUANTITY } from './cart.constants';
 import { getSelectionKey } from './cart.utils';
 
 type CartState = {
@@ -62,11 +62,11 @@ export const useCartStore = create<CartState>()(
 								item.id === existingItem.id
 									? {
 											...item,
-											// Begränsa antalet till 5 för drycker och 99 för övriga produkter.
+											// Begränsa antalet till 5 för drycker och 10 för övriga produkter.
 											quantity: Math.min(
 												item.product.category === 'drink'
 													? MAX_DRINK_QUANTITY
-													: 99,
+													: MAX_MEAL_QUANTITY,
 												item.quantity + 1,
 											),
 										}
@@ -91,9 +91,11 @@ export const useCartStore = create<CartState>()(
 								// Lämna övriga varukorgsrader oförändrade.
 								if (item.id !== id) return item;
 
-								// Bestäm maxgräns: 5 för drycker och 99 för övriga produkter.
+								// Bestäm maxgräns: 5 för drycker och 10 för övriga produkter.
 								const max =
-									item.product.category === 'drink' ? MAX_DRINK_QUANTITY : 99;
+									item.product.category === 'drink'
+										? MAX_DRINK_QUANTITY
+										: MAX_MEAL_QUANTITY;
 
 								// Begränsa kvantiteten till intervallet 0–max.
 								return {
