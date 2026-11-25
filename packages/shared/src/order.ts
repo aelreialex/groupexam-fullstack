@@ -98,3 +98,11 @@ export const orderSchema = z.object({
 export type Order = z.infer<typeof orderSchema>;
 export type ItemSnapshot = z.infer<typeof itemSnapshotSchema>;
 export type IngredientSnapshot = z.infer<typeof ingredientSnapshotSchema>;
+
+export const confirmOrderSchema = z.object({
+	sessionId: z
+		.string("Session-ID måste vara en textsträng")
+		.min(1, "Session-ID krävs"),
+});
+
+export type ConfirmOrder = z.infer<typeof confirmOrderSchema>;
