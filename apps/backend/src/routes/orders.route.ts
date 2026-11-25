@@ -1,0 +1,15 @@
+import { Router } from "express";
+import * as ordersController from "../controllers/orders.controller";
+import { zodValidate } from "../middlewares/validateBody.middleware";
+import { confirmOrderSchema, createOrderSchema } from "@app/shared";
+
+const router = Router();
+
+router.post("/", zodValidate(createOrderSchema), ordersController.createOrder);
+router.patch(
+	"/:id/confirm",
+	zodValidate(confirmOrderSchema),
+	ordersController.confirmOrder,
+);
+
+export default router;

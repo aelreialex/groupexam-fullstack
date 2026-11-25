@@ -40,5 +40,5 @@ const ingredientSchema = new Schema<Omit<Ingredient, "_id">>({
 	},
 });
 
-const Ingredient = model("Ingredient", ingredientSchema);
-export default Ingredient;
+const IngredientModel = model("Ingredient", ingredientSchema);
+export default IngredientModel;

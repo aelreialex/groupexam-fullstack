@@ -1,7 +1,7 @@
 import { model, Schema, Types } from "mongoose";
 import { PRODUCT_CATEGORIES, type Product } from "@app/shared";
 
-type MongooseIProduct = Omit<
+type MongooseProduct = Omit<
 	Product,
 	"_id" | "ingredients" | "extras" | "condiments"
 > & {
@@ -10,7 +10,7 @@ type MongooseIProduct = Omit<
 	condiments: Types.ObjectId[];
 };
 
-const productSchema = new Schema<MongooseIProduct>({
+const productSchema = new Schema<MongooseProduct>({
 	name: {
 		type: String,
 		required: true,
@@ -78,5 +78,5 @@ const productSchema = new Schema<MongooseIProduct>({
 	},
 });
 
-const Product = model("Product", productSchema);
-export default Product;
+const ProductModel = model("Product", productSchema);
+export default ProductModel;
