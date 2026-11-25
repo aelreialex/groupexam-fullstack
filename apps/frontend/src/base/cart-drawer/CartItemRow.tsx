@@ -2,7 +2,10 @@ import type { ReactNode } from 'react';
 import { Counter } from '@app/counter';
 import type { CartItem } from '../../core/cart/cart.types';
 import { getUnitPrice } from '../../core/cart/cart.utils';
-import { MAX_DRINK_QUANTITY } from '../../core/cart/cart.constants';
+import {
+	MAX_DRINK_QUANTITY,
+	MAX_MEAL_QUANTITY,
+} from '../../core/cart/cart.constants';
 
 type CartItemRowProps = {
 	item: CartItem;
@@ -43,7 +46,11 @@ export function CartItemRow({
 					<Counter
 						value={item.quantity}
 						onChange={(quantity) => onQuantityChange(item.id, quantity)}
-						max={item.product.category === 'drink' ? MAX_DRINK_QUANTITY : 99}
+						max={
+							item.product.category === 'drink'
+								? MAX_DRINK_QUANTITY
+								: MAX_MEAL_QUANTITY
+						}
 					/>
 
 					{showRemove && (
