@@ -6,7 +6,7 @@ function StaffLayout() {
     <div className="flex flex-col min-h-screen">
       <StaffHeader />
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
+      <main className="w-full flex-1">
         <Outlet />
       </main>
     </div>
