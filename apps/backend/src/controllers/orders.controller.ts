@@ -17,3 +17,19 @@ export const createOrder = async (
 		data: order,
 	});
 };
+
+export const confirmOrder = async (
+	req: Request<{ id: string }>,
+	res: Response<ApiResponse<Order>>,
+	_next: NextFunction,
+) => {
+	const { sessionId } = req.body;
+
+	const order = await ordersService.confirmOrder(req.params.id, sessionId);
+
+	return res.json({
+		success: true,
+		message: "Betalning bekräftad",
+		data: order,
+	});
+};

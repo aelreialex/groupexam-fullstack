@@ -59,7 +59,7 @@ export const createOrder = async (body: CreateOrder) => {
 	});
 
 	// return order to frontend with the stripe checkout url
-	return order.toJSON() as unknown as Order;
+	return formatOrder(order);
 };
 
 // might need to refactor for custom hotdog later and maybe split up the code in to functions for DRY and readability
@@ -226,4 +226,46 @@ export const getNextOrderNumber = async (): Promise<number> => {
 	);
 
 	return counter.seq;
+};
+
+export const confirmOrder = async (
+	orderId: string,
+	sessionId: string,
+): Promise<Order> => {
+	// fetch order and make some basic checks
+	const order = await OrderModel.findById(orderId);
+
+	if (!order) {
+		throw createError(404, "Order kunde inte hittas");
+	}
+	if (order.paymentStatus === "paid") {
+		return formatOrder(order);
+	}
+
+	// fetch session and make some basic checks
+	const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+	if (session.payment_status !== "paid") {
+		throw createError(400, "Betalningen är inte genomförd");
+	}
+
+	if (session.metadata?.orderId !== order._id.toString()) {
+		throw createError(400, "Ogiltlig betalningssession för denna order");
+	}
+
+	// update order
+	order.paymentStatus = "paid";
+	order.customerName = session.customer_details?.name || "Gäst";
+	order.customerEmail = session.customer_details?.email || undefined;
+
+	await order.save();
+
+	return formatOrder(order);
+};
+
+type OrderDocument = InstanceType<typeof OrderModel>;
+
+const formatOrder = (order: OrderDocument): Order => {
+	const { __v, ...cleanOrder } = order.toJSON();
+	return cleanOrder as unknown as Order;
 };
