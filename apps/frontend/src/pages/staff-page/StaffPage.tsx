@@ -8,6 +8,9 @@ export function StaffPage() {
 				<div>
 					<p className='font-kalam text-3xl'>Dags att rulla igång!</p>
 					<img src={nisse} alt='' className='mx-auto mt-4 w-full max-w-sm' />
+					<p className='mt-4 text-center font-kalam text-xl'>
+						Välkommen till ett nytt pass.
+					</p>
 				</div>
 
 				<div className='rounded-sm border-2 border-border-strong bg-bg-surface p-6 md:p-10'>
