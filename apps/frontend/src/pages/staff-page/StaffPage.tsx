@@ -1,19 +1,24 @@
 import { Button } from '@app/button';
 import nisse from '../../assets/images/nisse-big.png';
+import staffHeading from '../../assets/images/staff-heading.svg';
 
 export function StaffPage() {
 	return (
 		<section className='mx-auto w-full max-w-6xl px-4 py-12'>
 			<div className='grid items-center gap-10 md:grid-cols-2'>
 				<div>
-					<p className='font-kalam text-3xl'>Dags att rulla igång!</p>
+					<img
+						src={staffHeading}
+						alt='Dags att rulla igång!'
+						className='mx-auto w-full max-w-md -rotate-6'
+					/>
 					<img src={nisse} alt='' className='mx-auto mt-4 w-full max-w-sm' />
 					<p className='mt-4 text-center font-kalam text-xl'>
 						Välkommen till ett nytt pass.
 					</p>
 				</div>
 
-				<div className='rounded-sm border-2 border-border-strong bg-bg-surface p-6 md:p-10'>
+				<div className='rounded-2xl border-[3px] border-border-strong bg-bg-surface p-6 md:p-10 shadow-[10px_10px_0_var(--color-border-strong)]'>
 					<p className='mb-3 text-sm font-bold text-brand-primary'>
 						FÖR PERSONAL
 					</p>
