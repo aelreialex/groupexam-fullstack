@@ -227,3 +227,33 @@ export const getNextOrderNumber = async (): Promise<number> => {
 
 	return counter.seq;
 };
+
+export type OrderStatus = "pending" | "preparing" | "ready";
+
+// type OrderFilter = {
+// 	status?: OrderStatus | { $in: OrderStatus[] };
+// 	paymentStatus?: string;
+// }
+
+export const getOrders = async ( status?: string, paymentStatus?: string ): Promise<{ success: boolean; orderslist: unknown[];}> => {
+	const filter : Record<string, unknown> = {};
+
+	if (status) {
+		const statusList = status.split(",").map((item) => item.trim()).filter(Boolean) as OrderStatus[];
+	
+		if(statusList.length > 0) {
+			filter.status = { $in: statusList };
+		}
+	}
+
+	if (paymentStatus) {
+		filter.paymentStatus = paymentStatus;
+	}
+
+	const orders = await OrderModel.find(filter);
+
+	return {
+		success: true,
+		orderslist: orders,
+	};
+};

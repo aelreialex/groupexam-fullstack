@@ -17,3 +17,18 @@ export const createOrder = async (
 		data: order,
 	});
 };
+
+export const getOrders = async ( req: Request, res: Response,  _next: NextFunction ) => {
+
+	const status = req.query.status as string;
+
+	const paymentStatus = req.query.paymentStatus as string;
+
+	const orders = await ordersService.getOrders(status, paymentStatus)
+
+	return res.json({
+		success: true,
+		message: "Orderlista hämtad",
+		data: orders
+	})
+}

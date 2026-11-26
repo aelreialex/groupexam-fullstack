@@ -7,4 +7,6 @@ const router = Router();
 
 router.post("/", zodValidate(createOrderSchema), ordersController.createOrder);
 
+router.get("/", ordersController.getOrders);
+
 export default router;
