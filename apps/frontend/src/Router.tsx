@@ -27,13 +27,13 @@ const router = createBrowserRouter([
         element: <CheckoutPage />,
       },
       {
-        path: "/checkout/success",
-        element: <PaymentResultPage status="success" />,
+        path: "/order/:orderId",
+        element: <PaymentResultPage />,
       },
-      {
-        path: "/checkout/cancel",
-        element: <PaymentResultPage status="cancel" />,
-      },
+      // {
+      //   path: "/checkout/cancel",
+      //   element: <PaymentResultPage />,
+      // },
     ],
   },
   {
