@@ -1,17 +1,18 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import CustomerLayout from "./layouts/CustomerLayout";
-import StaffLayout from "./layouts/StaffLayout";
+import CustomerLayout from './layouts/CustomerLayout';
+import StaffLayout from './layouts/StaffLayout';
 
-import { HomePage } from "@app/home-page";
-import { MenuPage } from "@app/menu-page";
-import { CheckoutPage } from "@app/checkout-page";
-import { PaymentResultPage } from "@app/payment-result-page";
-import { StaffOrdersPage } from "@app/staff-orders-page";
+import { HomePage } from '@app/home-page';
+import { MenuPage } from '@app/menu-page';
+import { CheckoutPage } from '@app/checkout-page';
+import { PaymentResultPage } from '@app/payment-result-page';
+import { StaffPage } from '@app/staff-page';
+import { StaffOrdersPage } from '@app/staff-orders-page';
 
 const router = createBrowserRouter([
-  {
-    path: "/",
+	  {
+    path: '/',
     element: <CustomerLayout />,
     children: [
       {
@@ -19,15 +20,15 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/menu",
+        path: '/menu',
         element: <MenuPage />,
       },
       {
-        path: "/checkout",
+        path: '/checkout',
         element: <CheckoutPage />,
       },
       {
-        path: "/order/:orderId",
+        path: '/order/:orderId',
         element: <PaymentResultPage />,
       },
       // {
@@ -37,11 +38,15 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/staff",
+    path: '/staff',
     element: <StaffLayout />,
     children: [
       {
-        path: "orders",
+        index: true,
+        element: <StaffPage />,
+      },
+      {
+        path: 'orders',
         element: <StaffOrdersPage />,
       },
     ],
@@ -49,7 +54,7 @@ const router = createBrowserRouter([
 ]);
 
 function Router() {
-  return <RouterProvider router={router} />;
+	return <RouterProvider router={router} />;
 }
 
 export default Router;
