@@ -64,6 +64,10 @@ export function StaffPage() {
 						<Button type='submit' className='mt-2 w-full'>
 							Logga in
 						</Button>
+
+						<p className='mt-6 text-center text-sm text-text-secondary'>
+							Behöver du hjälp? Kontakta dina arbetsledare.
+						</p>
 					</form>
 				</div>
 			</div>
