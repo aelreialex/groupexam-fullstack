@@ -3,21 +3,39 @@ import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import type { FormEvent } from 'react';
 import { login } from '@app/auth';
+import { useNavigate } from 'react-router-dom';
 import nisse from '../../assets/images/nisse-big.png';
 import { StaffHeading } from '../../assets/images/staff-heading';
 
 export function StaffPage() {
 	const [showPassword, setShowPassword] = useState(false);
+	const [loginError, setLoginError] = useState('');
+	const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+	const navigate = useNavigate();
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
+		if (isLoggingIn) return;
 
 		const formData = new FormData(event.currentTarget);
 
 		const username = String(formData.get('username') ?? '');
 		const password = String(formData.get('password') ?? '');
 
-		await login({ username, password });
+		setLoginError('');
+		setIsLoggingIn(true);
+
+		try {
+			await login({ username, password });
+			navigate('/staff/orders', { replace: true });
+		} catch (error) {
+			setLoginError(
+				error instanceof Error ? error.message : 'Något gick fel. Försök igen.',
+			);
+		} finally {
+			setIsLoggingIn(false);
+		}
 	}
 	return (
 		<section className='mx-auto w-full max-w-6xl px-4 pt-6 pb-12 md:pt-12'>
@@ -107,8 +125,19 @@ export function StaffPage() {
 							</div>
 						</div>
 
-						<Button type='submit' className='mt-2 w-full'>
-							Logga in
+						{loginError && (
+							<p
+								role='alert'
+								className='text-sm font-semibold text-brand-primary'>
+								{loginError}
+							</p>
+						)}
+
+						<Button
+							type='submit'
+							disabled={isLoggingIn}
+							className='mt-2 w-full'>
+							{isLoggingIn ? 'Loggar in...' : 'Logga in'}
 						</Button>
 
 						<p className='mt-6 text-center text-sm text-text-secondary'>
