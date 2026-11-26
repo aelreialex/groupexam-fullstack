@@ -1,11 +1,24 @@
 import { Button } from '@app/button';
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import type { FormEvent } from 'react';
+import { login } from '@app/auth';
 import nisse from '../../assets/images/nisse-big.png';
 import { StaffHeading } from '../../assets/images/staff-heading';
 
 export function StaffPage() {
 	const [showPassword, setShowPassword] = useState(false);
+
+	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+
+		const formData = new FormData(event.currentTarget);
+
+		const username = String(formData.get('username') ?? '');
+		const password = String(formData.get('password') ?? '');
+
+		await login({ username, password });
+	}
 	return (
 		<section className='mx-auto w-full max-w-6xl px-4 pt-6 pb-12 md:pt-12'>
 			<div className='grid items-center gap-10 md:grid-cols-2'>
@@ -32,7 +45,7 @@ export function StaffPage() {
 						Här håller du koll på dagens beställningar.
 					</p>
 
-					<form className='mt-8 flex flex-col gap-5'>
+					<form onSubmit={handleSubmit} className='mt-8 flex flex-col gap-5'>
 						<div className='flex flex-col gap-2'>
 							<label htmlFor='username' className='font-bold'>
 								Användarnamn
