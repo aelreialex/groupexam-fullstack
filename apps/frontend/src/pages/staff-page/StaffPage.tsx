@@ -7,13 +7,17 @@ import { StaffHeading } from '../../assets/images/staff-heading';
 export function StaffPage() {
 	const [showPassword, setShowPassword] = useState(false);
 	return (
-		<section className='mx-auto w-full max-w-6xl px-4 py-12'>
+		<section className='mx-auto w-full max-w-6xl px-4 pt-6 pb-12 md:pt-12'>
 			<div className='grid items-center gap-10 md:grid-cols-2'>
 				<div>
 					<div className='mx-auto w-full max-w-md -rotate-6'>
 						<StaffHeading />
 					</div>
-					<img src={nisse} alt='' className='mx-auto mt-4 w-full max-w-sm' />
+					<img
+						src={nisse}
+						alt=''
+						className='mx-auto mt-4 w-full max-w-48 md:max-w-sm'
+					/>
 					<p className='mt-4 text-center font-kalam text-xl'>
 						Välkommen till ett nytt pass.
 					</p>
