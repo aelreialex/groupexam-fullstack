@@ -1,4 +1,4 @@
-import type { Product } from '@app/shared';
+import type { CreateOrder, Product } from '@app/shared';
 import type { CartItem } from './cart.types';
 
 export function toggleSelection(ids: string[], id: string, max: number) {
@@ -40,4 +40,16 @@ export function getSelectionKey(
 		extras.map((extra) => extra._id).sort(),
 		condiments.map((condiment) => condiment._id).sort(),
 	]);
+}
+
+export function createOrderBody(items: CartItem[]): CreateOrder {
+	return {
+		cart: items.map((item) => ({
+			type: 'product',
+			productId: item.product._id,
+			quantity: item.quantity,
+			extras: item.selectedExtras.map((extra) => extra._id),
+			condiments: item.selectedCondiments.map((condiment) => condiment._id),
+		})),
+	};
 }

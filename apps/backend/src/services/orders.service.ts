@@ -6,6 +6,7 @@ import createError from "http-errors";
 import Stripe from "stripe";
 import { Types } from "mongoose";
 import OrderModel from "../models/order.model";
+import { type OrderStatus, type PaymentStatus} from "@app/shared"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -59,7 +60,7 @@ export const createOrder = async (body: CreateOrder) => {
 	});
 
 	// return order to frontend with the stripe checkout url
-	return order.toJSON() as unknown as Order;
+	return formatOrder(order);
 };
 
 // might need to refactor for custom hotdog later and maybe split up the code in to functions for DRY and readability
@@ -228,26 +229,31 @@ export const getNextOrderNumber = async (): Promise<number> => {
 	return counter.seq;
 };
 
-export type OrderStatus = "pending" | "preparing" | "ready";
-
 // type OrderFilter = {
 // 	status?: OrderStatus | { $in: OrderStatus[] };
 // 	paymentStatus?: string;
 // }
 
-export const getOrders = async ( status?: string, paymentStatus?: string ): Promise<{ success: boolean; orderslist: unknown[];}> => {
-	const filter : Record<string, unknown> = {};
+export const getOrders = async ( status?: OrderStatus, paymentStatus?: PaymentStatus ): Promise<{ success: boolean; orderslist: unknown[];}> => {
+	const filter: {
+		status?: { $in: OrderStatus[] };
+		paymentStatus?: { $in: PaymentStatus[] };
+	} = {};
 
 	if (status) {
 		const statusList = status.split(",").map((item) => item.trim()).filter(Boolean) as OrderStatus[];
 	
-		if(statusList.length > 0) {
+		if(statusList.length > 0 ) {
 			filter.status = { $in: statusList };
 		}
 	}
 
 	if (paymentStatus) {
-		filter.paymentStatus = paymentStatus;
+		const paymentList = paymentStatus.split(",").map((item) => item.trim()).filter(Boolean) as PaymentStatus[];
+
+		if(paymentList.length > 0 ) {
+			filter.paymentStatus = { $in: paymentList }
+		}
 	}
 
 	const orders = await OrderModel.find(filter);
@@ -256,4 +262,47 @@ export const getOrders = async ( status?: string, paymentStatus?: string ): Prom
 		success: true,
 		orderslist: orders,
 	};
+};
+
+
+export const confirmOrder = async (
+	orderId: string,
+	sessionId: string,
+): Promise<Order> => {
+	// fetch order and make some basic checks
+	const order = await OrderModel.findById(orderId);
+
+	if (!order) {
+		throw createError(404, "Order kunde inte hittas");
+	}
+	if (order.paymentStatus === "paid") {
+		return formatOrder(order);
+	}
+
+	// fetch session and make some basic checks
+	const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+	if (session.payment_status !== "paid") {
+		throw createError(400, "Betalningen är inte genomförd");
+	}
+
+	if (session.metadata?.orderId !== order._id.toString()) {
+		throw createError(400, "Ogiltlig betalningssession för denna order");
+	}
+
+	// update order
+	order.paymentStatus = "paid";
+	order.customerName = session.customer_details?.name || "Gäst";
+	order.customerEmail = session.customer_details?.email || undefined;
+
+	await order.save();
+
+	return formatOrder(order);
+};
+
+type OrderDocument = InstanceType<typeof OrderModel>;
+
+const formatOrder = (order: OrderDocument): Order => {
+	const { __v, ...cleanOrder } = order.toJSON();
+	return cleanOrder as unknown as Order;
 };
