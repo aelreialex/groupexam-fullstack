@@ -1,7 +1,7 @@
 import { Button } from '@app/button';
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { login } from '@app/auth';
 import { useNavigate } from 'react-router-dom';
 import nisse from '../../assets/images/nisse-big.png';
@@ -14,7 +14,7 @@ export function StaffPage() {
 
 	const navigate = useNavigate();
 
-	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+	async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
 		if (isLoggingIn) return;
 
