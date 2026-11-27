@@ -1,7 +1,12 @@
 import ProductModel from "../models/product.model";
 import IngredientModel from "../models/ingredient.model";
 import { CounterModel } from "../models/counter.model";
-import { type CreateOrder, type ItemSnapshot, type Order } from "@app/shared";
+import {
+	OrderStatus,
+	type CreateOrder,
+	type ItemSnapshot,
+	type Order,
+} from "@app/shared";
 import createError from "http-errors";
 import Stripe from "stripe";
 import { Types } from "mongoose";
@@ -257,6 +262,23 @@ export const confirmOrder = async (
 	order.paymentStatus = "paid";
 	order.customerName = session.customer_details?.name || "Gäst";
 	order.customerEmail = session.customer_details?.email || undefined;
+
+	await order.save();
+
+	return formatOrder(order);
+};
+
+export const changeOrderStatus = async (
+	orderId: string,
+	orderStatus: OrderStatus,
+): Promise<Order> => {
+	const order = await OrderModel.findById(orderId);
+
+	if (!order) {
+		throw createError(404, "Order kunde inte hittas");
+	}
+
+	order.status = orderStatus;
 
 	await order.save();
 
