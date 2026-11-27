@@ -7,12 +7,13 @@ import { errorHandler } from "./middlewares/errorHandler.middleware";
 import menuRouter from "./routes/menu.route";
 import ordersRouter from "./routes/orders.route";
 import authRouter from "./routes/auth.routes";
+import aiRouter from "./routes/ai.route";
 
 // config
 const test = process.env.CONNECTION_STRING;
 
 if (!test) {
-	throw new Error("No connection string found no connection to the database");
+  throw new Error("No connection string found no connection to the database");
 }
 
 mongoose.connect(test);
@@ -34,25 +35,25 @@ app.use(express.json());
 // );
 
 const allowedOrigins = [
-	frontendAdress?.replace(/\/$/, ""),
-	"http://localhost:5173",
+  frontendAdress?.replace(/\/$/, ""),
+  "http://localhost:5173",
 ].filter(Boolean);
 
 app.use(
-	cors({
-		origin: (origin, callback) => {
-			if (
-				!origin ||
-				allowedOrigins.includes(origin) ||
-				origin.endsWith(".vercel.app")
-			) {
-				callback(null, true);
-			} else {
-				callback(new Error("Not allowed by CORS"));
-			}
-		},
-		credentials: true,
-	}),
+  cors({
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".vercel.app")
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  }),
 );
 
 app.use(cookieParser());
@@ -62,14 +63,15 @@ app.use(cookieParser());
 app.use("/api/menu", menuRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/ai", aiRouter);
 
 // database connection and port
 database.on("error", (error) => console.log(error));
 database.once("connected", () => {
-	console.log("We're live!");
-	app.listen(PORT, () => {
-		console.log(`API running on ${PORT}`);
-	});
+  console.log("We're live!");
+  app.listen(PORT, () => {
+    console.log(`API running on ${PORT}`);
+  });
 });
 
 app.use(errorHandler);
