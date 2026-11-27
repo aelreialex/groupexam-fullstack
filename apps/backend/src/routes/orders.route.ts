@@ -23,4 +23,6 @@ router.patch(
 	ordersController.confirmOrder,
 );
 
+router.get("/", requireAuth ,ordersController.getOrders);
+
 export default router;

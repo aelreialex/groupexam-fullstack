@@ -11,6 +11,7 @@ import createError from "http-errors";
 import Stripe from "stripe";
 import { Types } from "mongoose";
 import OrderModel from "../models/order.model";
+import { type OrderStatus, type PaymentStatus} from "@app/shared"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -232,6 +233,42 @@ export const getNextOrderNumber = async (): Promise<number> => {
 
 	return counter.seq;
 };
+
+// type OrderFilter = {
+// 	status?: OrderStatus | { $in: OrderStatus[] };
+// 	paymentStatus?: string;
+// }
+
+export const getOrders = async ( status?: OrderStatus, paymentStatus?: PaymentStatus ): Promise<{ success: boolean; orderslist: unknown[];}> => {
+	const filter: {
+		status?: { $in: OrderStatus[] };
+		paymentStatus?: { $in: PaymentStatus[] };
+	} = {};
+
+	if (status) {
+		const statusList = status.split(",").map((item) => item.trim()).filter(Boolean) as OrderStatus[];
+	
+		if(statusList.length > 0 ) {
+			filter.status = { $in: statusList };
+		}
+	}
+
+	if (paymentStatus) {
+		const paymentList = paymentStatus.split(",").map((item) => item.trim()).filter(Boolean) as PaymentStatus[];
+
+		if(paymentList.length > 0 ) {
+			filter.paymentStatus = { $in: paymentList }
+		}
+	}
+
+	const orders = await OrderModel.find(filter);
+
+	return {
+		success: true,
+		orderslist: orders,
+	};
+};
+
 
 export const confirmOrder = async (
 	orderId: string,

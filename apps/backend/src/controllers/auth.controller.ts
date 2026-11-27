@@ -60,4 +60,3 @@ export const loginUser = async (req: Request<{}, {}, LoginRequestBody>, res: Res
         message: "Logged in successfully"
     })
 }
-

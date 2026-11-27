@@ -1,5 +1,6 @@
 import { type Request, type Response, type NextFunction } from "express";
 import * as ordersService from "../services/orders.service";
+import { type OrderStatus, type PaymentStatus} from "@app/shared"
 import {
 	type Order,
 	type ApiResponse,
@@ -23,6 +24,20 @@ export const createOrder = async (
 	});
 };
 
+export const getOrders = async ( req: Request, res: Response,  _next: NextFunction ) => {
+
+	const status = req.query.status as OrderStatus;
+
+	const paymentStatus = req.query.paymentStatus as PaymentStatus;
+
+	const orders = await ordersService.getOrders(status, paymentStatus)
+
+	return res.json({
+		success: true,
+		message: "Orderlista hämtad",
+		data: orders
+	})
+}
 export const confirmOrder = async (
 	req: Request<{ id: string }>,
 	res: Response<ApiResponse<Order>>,

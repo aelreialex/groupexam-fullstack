@@ -52,7 +52,7 @@ export function ProductOptions({
 			<div
 				id={extrasId}
 				hidden={!alwaysExpanded && !isExpanded}
-				className={`space-y-2 overflow-y-auto pr-2 ${alwaysExpanded ? 'max-h-32 py-3' : 'max-h-48 pb-3 '}`}>
+				className={`space-y-2 overflow-y-auto pr-2 pl-0.25 ${alwaysExpanded ? 'max-h-32 py-3' : 'max-h-48 pb-3 '}`}>
 				{product.extras.map((extra) => (
 					<label key={extra._id} className='flex items-center gap-2 text-sm'>
 						<input
