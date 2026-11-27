@@ -1,0 +1,6 @@
+{
+	"name": "@app/checkout-page",
+	"private": true,
+	"type": "module",
+	"exports": "./index.ts"
+}

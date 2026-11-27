@@ -1,8 +1,9 @@
 import type { Product } from '@app/shared';
 import { Button } from '@app/button';
 import { useId, useState } from 'react';
-import { useCart } from '../../core/cart/CartProvider';
-
+import { useProductSelection } from '../../core/menu/useProductSelection';
+import { ProductOptions } from './ProductOptions';
+import { ProductAllergens } from './ProductAllergens';
 type ProductCardProps = {
 	product: Product;
 	imageSrc: string;
@@ -13,28 +14,24 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 	const { name, price, description, nisseQuote } = product;
 	const [isExpanded, setIsExpanded] = useState(false);
 	const extrasId = useId();
-	const [selectedExtraIds, setSelectedExtraIds] = useState<string[]>([]);
-	const { addItem } = useCart();
-
-	function toggleExtra(extraId: string) {
-		setSelectedExtraIds((currentIds) =>
-			currentIds.includes(extraId)
-				? currentIds.filter((id) => id !== extraId)
-				: [...currentIds, extraId],
-		);
-	}
+	const {
+		selectedExtraIds,
+		selectedCondimentIds,
+		toggleExtra,
+		toggleCondiment,
+		addToCart,
+		allergens,
+	} = useProductSelection(product);
 
 	function handleAddToCart() {
-		const selectedExtras = product.extras.filter(
-			(extra) => selectedExtraIds.includes(extra._id) && extra.inStock,
-		);
-
-		addItem(product, selectedExtras);
+		addToCart();
+		setIsExpanded(false);
 	}
 
 	return (
 		<article
 			className='
+			flex h-full flex-col
 			overflow-hidden
 			rounded-sm
 			border
@@ -53,7 +50,7 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 			object-cover
 			'
 			/>
-			<div className='space-y-3 p-4'>
+			<div className='flex flex-1 flex-col gap-3 p-4'>
 				<div
 					className='
 				flex
@@ -85,48 +82,23 @@ export function ProductCard({ product, imageSrc, imageAlt }: ProductCardProps) {
 				{nisseQuote && (
 					<p className='font-kalam text-sm'>Nisse: "{nisseQuote}"</p>
 				)}
+				<div className='mt-auto space-y-3'>
+					<ProductAllergens allergens={allergens} />
+					<ProductOptions
+						product={product}
+						isExpanded={isExpanded}
+						extrasId={extrasId}
+						onToggleExpanded={() => setIsExpanded((current) => !current)}
+						selectedExtraIds={selectedExtraIds}
+						selectedCondimentIds={selectedCondimentIds}
+						toggleExtra={toggleExtra}
+						toggleCondiment={toggleCondiment}
+					/>
 
-				<div className='border-y border-dashed border-border-subtle'>
-					<button
-						type='button'
-						aria-expanded={isExpanded}
-						aria-controls={extrasId}
-						onClick={() => setIsExpanded((current) => !current)}
-						className='
-						flex w-full
-						cursor-pointer
-						items-center justify-between
-						gap-4 py-3
-						text-left text-sm font-bold
-						focus-visible:outline-2
-						focus-visible:outline-offset-2
-						focus-visible:outline-border-strong'>
-						<span>Välj tillbehör</span>
-						<span aria-hidden='true'>{isExpanded ? '-' : '+'}</span>
-					</button>
-
-					<div id={extrasId} hidden={!isExpanded} className='space-y-2 pb-3'>
-						{product.extras.map((extra) => (
-							<label
-								key={extra._id}
-								className='flex items-center gap-2 text-sm'>
-								<input
-									type='checkbox'
-									checked={selectedExtraIds.includes(extra._id)}
-									onChange={() => toggleExtra(extra._id)}
-									disabled={!extra.inStock}
-									className='size-4 accent-brand-primary'
-								/>
-
-								<span className='flex-1'>{extra.name}</span>
-								<span>{extra.inStock ? `+${extra.price} kr` : 'Slut'}</span>
-							</label>
-						))}
-					</div>
+					<Button onClick={handleAddToCart} disabled={!product.inStock}>
+						Lägg till
+					</Button>
 				</div>
-				<Button onClick={handleAddToCart} disabled={!product.inStock}>
-					Lägg till
-				</Button>
 			</div>
 		</article>
 	);

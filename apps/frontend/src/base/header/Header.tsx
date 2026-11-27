@@ -10,7 +10,7 @@ type HeaderProps = {
 
 export function Header({ onOpenCart, cartQuantity }: HeaderProps) {
 	return (
-		<header className='w-full border-b border-border-strong'>
+		<header className='sticky top-0 z-30 w-full border-b border-border-strong bg-bg-surface'>
 			<div
 				className={`
           mx-auto grid max-w-6xl grid-cols-2 items-center gap-4
