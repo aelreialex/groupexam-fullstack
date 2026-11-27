@@ -42,7 +42,7 @@ export const createOrder = async (body: CreateOrder) => {
 			orderId: orderId.toString(),
 		},
 		success_url: `${process.env.FRONTEND_ADDRESS}/order/${orderId.toString()}?session_id={CHECKOUT_SESSION_ID}`,
-		cancel_url: `${process.env.FRONTEND_ADDRESS}/?canceled=true`,
+		cancel_url: `${process.env.FRONTEND_ADDRESS}/checkout`,
 	});
 
 	if (!session.url) {
