@@ -106,3 +106,9 @@ export const confirmOrderSchema = z.object({
 });
 
 export type ConfirmOrder = z.infer<typeof confirmOrderSchema>;
+
+export const changeOrderStatusSchema = z.object({
+	orderStatus: orderStatusSchema,
+});
+
+export type ChangeOrderStatus = z.infer<typeof changeOrderStatusSchema>;

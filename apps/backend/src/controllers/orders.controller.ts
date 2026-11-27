@@ -1,7 +1,12 @@
 import { type Request, type Response, type NextFunction } from "express";
 import * as ordersService from "../services/orders.service";
-import { type Order, type ApiResponse, type CreateOrder } from "@app/shared";
 import { type OrderStatus, type PaymentStatus} from "@app/shared"
+import {
+	type Order,
+	type ApiResponse,
+	type CreateOrder,
+	ChangeOrderStatus,
+} from "@app/shared";
 
 export const createOrder = async (
 	req: Request,
@@ -45,6 +50,23 @@ export const confirmOrder = async (
 	return res.json({
 		success: true,
 		message: "Betalning bekräftad",
+		data: order,
+	});
+};
+
+export const changeOrderStatus = async (
+	req: Request,
+	res: Response<ApiResponse<Order>>,
+	_next: NextFunction,
+) => {
+	const { orderStatus } = req.body;
+	const { id } = req.params as { id: string };
+
+	const order = await ordersService.changeOrderStatus(id, orderStatus);
+
+	return res.json({
+		success: true,
+		message: `Order status på order ${id} har satts till ${orderStatus}`,
 		data: order,
 	});
 };
